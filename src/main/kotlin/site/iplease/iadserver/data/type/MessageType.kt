@@ -3,5 +3,5 @@ package site.iplease.iadserver.data.type
 enum class MessageType(
     val routingKey: String
 ) {
-    DEMAND_ASSIGN_IP("ipAssignDemandCreate")
+    IP_ASSIGN_DEMAND_CREATE("ipAssignDemandCreate")
 }

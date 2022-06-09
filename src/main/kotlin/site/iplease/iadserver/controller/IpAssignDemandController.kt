@@ -25,10 +25,10 @@ class IpAssignDemandController(
     fun demandAssignIp(@RequestHeader("X-Authorization-Id") accountId: Long,
                        @RequestBody request: AssignIpDemandRequest
     ): Mono<ResponseEntity<AssignIpDemandResponse>> =
-            demandDataConverter.toDto(accountId, request)
-                .flatMap { demand -> demandDataValidator.validate(demand) }
-                .flatMap { demand -> ipAssignDemandService.addDemand(demand) }
-                .flatMap { demand -> messagePublishService.publish(MessageType.DEMAND_ASSIGN_IP, demand).map { demand } }
-                .map { demand -> AssignIpDemandResponse(demandId = demand.id) }
-                .map { response -> ResponseEntity.ok(response) }
+            demandDataConverter.toDto(accountId, request) //요청정보에서 예약정보를 추출한다.
+                .flatMap { demand -> demandDataValidator.validate(demand) } //추출한 예약을 검증한다.
+                .flatMap { demand -> ipAssignDemandService.addDemand(demand) } //검증완료된 예약을 추가한다.
+                .flatMap { demand -> messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_CREATE, demand).map { demand } } //예약 추가됨 메세지를 발행한다.
+                .map { demand -> AssignIpDemandResponse(demandId = demand.id) } //예약정보를 통해 반환값을 구성한다.
+                .map { response -> ResponseEntity.ok(response) } //반환값을 ResponseEntity에 Wrapping하여 반환한다.
 }
