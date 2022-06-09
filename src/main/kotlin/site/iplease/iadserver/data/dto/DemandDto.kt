@@ -1,6 +1,6 @@
-package site.iplease.iadserver.dto
+package site.iplease.iadserver.data.dto
 
-import site.iplease.iadserver.type.AssignIpUsageType
+import site.iplease.iadserver.data.type.AssignIpUsageType
 import java.time.LocalDate
 
 data class DemandDto (

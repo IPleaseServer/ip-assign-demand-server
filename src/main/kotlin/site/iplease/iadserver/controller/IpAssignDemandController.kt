@@ -5,11 +5,11 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.dto.DemandDto
+import site.iplease.iadserver.data.dto.DemandDto
 import site.iplease.iadserver.exception.WrongExpireDateException
 import site.iplease.iadserver.exception.WrongTitleException
-import site.iplease.iadserver.request.AssignIpDemandRequest
-import site.iplease.iadserver.response.AssignIpDemandResponse
+import site.iplease.iadserver.data.request.AssignIpDemandRequest
+import site.iplease.iadserver.data.response.AssignIpDemandResponse
 import site.iplease.iadserver.service.IpAssignDemandService
 import site.iplease.iadserver.util.DateUtil
 
@@ -22,7 +22,8 @@ class IpAssignDemandController(
 ) {
     @PostMapping
     fun demandAssignIp(@RequestHeader("X-Authorization-Id") accountId: Long,
-                       @RequestBody request: AssignIpDemandRequest): Mono<ResponseEntity<AssignIpDemandResponse>> =
+                       @RequestBody request: AssignIpDemandRequest
+    ): Mono<ResponseEntity<AssignIpDemandResponse>> =
             makeDemandData(accountId, request)
                 .flatMap { demand -> verifyDemandData(demand) }
                 .flatMap { demand -> ipAssignDemandService.addDemand(demand) }

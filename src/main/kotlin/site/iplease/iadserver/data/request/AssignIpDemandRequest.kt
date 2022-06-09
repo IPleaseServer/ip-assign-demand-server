@@ -1,6 +1,6 @@
-package site.iplease.iadserver.request
+package site.iplease.iadserver.data.request
 
-import site.iplease.iadserver.type.AssignIpUsageType
+import site.iplease.iadserver.data.type.AssignIpUsageType
 import java.time.LocalDate
 
 data class AssignIpDemandRequest (
