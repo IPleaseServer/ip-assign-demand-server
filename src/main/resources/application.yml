@@ -1,0 +1,3 @@
+spring.application.name: ip-assign-demand-server
+server.shutdown: graceful
+logging.config: classpath:logback/logback-${spring.profiles.active}.xml
