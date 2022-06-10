@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "site.iplease"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0-RELEASE"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {
@@ -36,17 +36,18 @@ dependencies {
     //spring boot
     implementation ("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
     //spring doc
     implementation ("org.springdoc:springdoc-openapi-webflux-ui:1.6.8")
     //spring cloud
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp")
     //database driver
     implementation("dev.miku:r2dbc-mysql:0.8.2.RELEASE")
     //jwt
