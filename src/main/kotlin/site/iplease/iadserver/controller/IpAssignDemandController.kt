@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
+import site.iplease.iadserver.data.dto.DemandDto
 import site.iplease.iadserver.data.request.AssignIpDemandRequest
 import site.iplease.iadserver.data.response.AssignIpDemandResponse
 import site.iplease.iadserver.data.type.MessageType
@@ -28,7 +29,12 @@ class IpAssignDemandController(
             demandDataConverter.toDto(accountId, request) //요청정보에서 예약정보를 추출한다.
                 .flatMap { demand -> demandDataValidator.validate(demand) } //추출한 예약을 검증한다.
                 .flatMap { demand -> ipAssignDemandService.addDemand(demand) } //검증완료된 예약을 추가한다.
-                .flatMap { demand -> messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_CREATE, demand).map { demand } } //예약 추가됨 메세지를 발행한다.
+                .flatMap { demand -> publishMessage(demand) } //예약 추가됨 메세지를 발행한다.
                 .map { demand -> AssignIpDemandResponse(demandId = demand.id) } //예약정보를 통해 반환값을 구성한다.
                 .map { response -> ResponseEntity.ok(response) } //반환값을 ResponseEntity에 Wrapping하여 반환한다.
+
+    private fun publishMessage(demand: DemandDto) =
+        demandDataConverter.toIpAssignDemandCreateMessage(demand)
+            .flatMap { message -> messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_CREATE, message)}
+            .map { demand }
 }

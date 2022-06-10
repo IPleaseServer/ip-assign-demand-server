@@ -5,6 +5,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.data.dto.DemandDto
 import site.iplease.iadserver.data.entity.Demand
+import site.iplease.iadserver.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.data.request.AssignIpDemandRequest
 
 @Component
@@ -37,4 +38,10 @@ class DemandDataConverterImpl: DemandDataConverter {
                 usage = it.usage,
                 expireAt = it.expireAt
             ) }
+
+    override fun toIpAssignDemandCreateMessage(demand: DemandDto): Mono<IpAssignDemandCreateMessage> =
+        demand.toMono().map { IpAssignDemandCreateMessage(
+            demandId = demand.id,
+            issuerId = demand.issuerId
+        ) }
 }
