@@ -18,12 +18,13 @@ class DemandErrorServiceImpl(
         Unit.toMono()
             .map { createRandomId() }
             .flatMap { id -> logErrorOnStatus(id, demand) }
-            .flatMap { id -> pushAlarmService.publish("할당IP신청중, 오류가 발생했습니다!", "다음 아이디로 관리자에게 문의해주세요!  - $id") }
+            .flatMap { id -> pushAlarmService.publish(demand.issuerId, "할당IP신청중, 오류가 발생했습니다!", "다음 아이디로 관리자에게 문의해주세요!  - $id") }
 
     private fun logErrorOnStatus(id: String, demand: IpAssignDemandErrorOnStatusDto): Mono<String> =
         id.toMono()
             .map {
                 logger.warn("[$id] 할당IP신청중 오류가 발생했습니다")
+                logger.warn("[$id] issuerId: ${demand.issuerId}")
                 logger.warn("[$id] demandId: ${demand.demandId}")
                 logger.warn("[$id] message: ${demand.message}")
             }.map { id }

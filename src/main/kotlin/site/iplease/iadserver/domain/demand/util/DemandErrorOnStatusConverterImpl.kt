@@ -12,6 +12,7 @@ class DemandErrorOnStatusConverterImpl: DemandErrorOnStatusConverter {
         message.toMono()
             .map { IpAssignDemandErrorOnStatusDto(
                 demandId = message.demandId,
+                issuerId = message.issuerId,
                 message = message.message
             ) }
 }
