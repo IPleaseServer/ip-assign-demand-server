@@ -26,8 +26,12 @@ class RabbitMqListener(
                 objectMapper.toMono()
                     .map { it.readValue(String(message.body), IpAssignDemandErrorOnStatusMessage::class.java) }
                     .map { ipAssignDemandErrorOnStatusSubscriber.subscribe(message = it) }
-                    .doOnError{ throwable -> logger.error("메세지를 직렬화하는도중 오류가 발생하였습니다!") }
-                    .onErrorResume { Mono.empty() }
+                    .doOnError{ throwable ->
+                        logger.error("메세지를 직렬화하는도중 오류가 발생하였습니다!")
+                        logger.error("exception: ${throwable.localizedMessage}")
+                        logger.error("payload(string): ${String(message.body)}")
+                        logger.error("payload(byte): ${message.body}")
+                    }.onErrorResume { Mono.empty() }
                     .block()
             else -> {
                 logger.warn("처리대상이 아닌 메세지가 바인딩되어있습니다!")
