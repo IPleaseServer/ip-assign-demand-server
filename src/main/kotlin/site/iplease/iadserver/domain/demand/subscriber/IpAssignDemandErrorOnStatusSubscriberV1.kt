@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import site.iplease.iadserver.domain.demand.service.DemandErrorService
 import site.iplease.iadserver.domain.demand.util.DemandErrorOnStatusConverter
-import site.iplease.iadserver.global.demand.message.IpAssignDemandErrorOnStatusMessage
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandErrorOnStatusMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandErrorOnStatusSubscriber
 
 @Component
