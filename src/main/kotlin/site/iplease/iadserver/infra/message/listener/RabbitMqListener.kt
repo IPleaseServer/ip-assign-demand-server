@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.global.demand.message.IpAssignDemandErrorOnStatusMessage
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandErrorOnStatusMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandErrorOnStatusSubscriber
 import site.iplease.iadserver.infra.message.type.MessageType
 
