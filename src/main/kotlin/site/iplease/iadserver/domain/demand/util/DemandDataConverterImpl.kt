@@ -7,6 +7,7 @@ import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.entity.Demand
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.domain.demand.data.request.AssignIpDemandRequest
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelMessage
 
 @Component
 class DemandDataConverterImpl: DemandDataConverter {
@@ -43,5 +44,15 @@ class DemandDataConverterImpl: DemandDataConverter {
         demand.toMono().map { IpAssignDemandCreateMessage(
             demandId = demand.id,
             issuerId = demand.issuerId
+        ) }
+
+    override fun toIpAssignDemandCancelMessage(demand: DemandDto): Mono<IpAssignDemandCancelMessage> =
+        demand.toMono().map { IpAssignDemandCancelMessage(
+            id = demand.id,
+            issuerId = demand.issuerId,
+            title = demand.title,
+            description = demand.description,
+            usage = demand.usage,
+            expireAt = demand.expireAt
         ) }
 }
