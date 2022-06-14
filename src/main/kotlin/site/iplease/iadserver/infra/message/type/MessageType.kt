@@ -4,7 +4,8 @@ enum class MessageType(
     val routingKey: String
 ) {
     IP_ASSIGN_DEMAND_CREATE("ipAssignDemandCreate"),
-    IP_ASSIGN_DEMAND_ERROR_ON_STATUS("ipAssignDemandErrorOnStatus"),
+    IP_ASSIGN_DEMAND_CANCEL("ipAssignDemandCancel"),
+    IP_ASSIGN_DEMAND_ERROR_ON_STATUS("ipAssignDemandErrorOnStatus"), //TODO routingKey를 ipAssignDemandCreateErrorOnStatus로 변경
     SEND_ALARM("sendAlarm"),
     UNKNOWN("");
 
