@@ -5,5 +5,5 @@ import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 
 interface IpAssignDemandService {
     fun addDemand(demand: DemandDto): Mono<DemandDto>
-
+    fun cancelDemand(demandId: Long): Mono<DemandDto>
 }
