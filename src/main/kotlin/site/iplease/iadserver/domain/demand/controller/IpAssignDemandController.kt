@@ -9,7 +9,7 @@ import site.iplease.iadserver.domain.demand.data.request.AssignIpDemandRequest
 import site.iplease.iadserver.domain.demand.data.request.CancelAssignIpDemandRequest
 import site.iplease.iadserver.domain.demand.data.response.AssignIpDemandResponse
 import site.iplease.iadserver.domain.demand.data.response.CancelAssignIpDemandResponse
-import site.iplease.iadserver.domain.demand.data.type.DemandPolicyType
+import site.iplease.iadserver.domain.demand.data.type.DemandPolicyGroupType
 import site.iplease.iadserver.infra.message.type.MessageType
 import site.iplease.iadserver.domain.demand.service.IpAssignDemandService
 import site.iplease.iadserver.infra.message.service.MessagePublishService
@@ -32,7 +32,7 @@ class IpAssignDemandController(
         @RequestHeader("X-Authorization-Id") accountId: Long,
         @RequestBody request: CancelAssignIpDemandRequest
     ): Mono<ResponseEntity<CancelAssignIpDemandResponse>> =
-        demandPolicyValidator.validate(accountId, request.demandId, DemandPolicyType.EXIST, DemandPolicyType.OWNERSHIP) //요청의 정보들을 검증한다.
+        demandPolicyValidator.validate(accountId, request.demandId, DemandPolicyGroupType.DEMAND_CANCEL) //요청의 정보들을 검증한다.
             .flatMap { _-> ipAssignDemandService.cancelDemand(request.demandId) } //검증완료된 요청값을 통해 신청을 DataStore에서 삭제한다.
             .flatMap { demand -> publishCancelMessage(demand) } //예약 취소됨 메세지를 발행한다.
             .map { CancelAssignIpDemandResponse() } //반환값을 구성한다.
