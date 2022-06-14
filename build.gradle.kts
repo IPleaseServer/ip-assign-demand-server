@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "site.iplease"
-version = "1.0.2-rc2" //DummyService(PushAlarm)구현 후 RELEASE버전으로 승격예정입니다
+version = "1.0.2-RELEASE"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {
