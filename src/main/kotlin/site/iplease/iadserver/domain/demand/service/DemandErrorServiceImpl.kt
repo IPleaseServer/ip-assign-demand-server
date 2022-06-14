@@ -6,14 +6,16 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.repository.DemandRepository
+import site.iplease.iadserver.global.common.util.DateUtil
 import site.iplease.iadserver.infra.alarm.service.PushAlarmService
+import kotlin.math.absoluteValue
 import kotlin.random.Random
-import kotlin.random.nextUInt
 
 @Service
 class DemandErrorServiceImpl(
     private val pushAlarmService: PushAlarmService,
-    private val demandRepository: DemandRepository
+    private val demandRepository: DemandRepository,
+    private val dateUtil: DateUtil
 ): DemandErrorService {
     private val logger = LoggerFactory.getLogger(this::class.java)
     override fun errorOnStatus(demand: IpAssignDemandErrorOnStatusDto): Mono<Unit> =
@@ -33,5 +35,5 @@ class DemandErrorServiceImpl(
             }.map { id }
 
     //가끔 한두번은 겹쳐도 상관없다.
-    private fun createRandomId() = Random.nextUInt().toString()
+    private fun createRandomId() =  dateUtil.dateNow().dayOfMonth.toString() + Random.nextInt().absoluteValue.toString()
 }

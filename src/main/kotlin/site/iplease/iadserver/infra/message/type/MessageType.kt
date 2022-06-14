@@ -5,6 +5,7 @@ enum class MessageType(
 ) {
     IP_ASSIGN_DEMAND_CREATE("ipAssignDemandCreate"),
     IP_ASSIGN_DEMAND_ERROR_ON_STATUS("ipAssignDemandErrorOnStatus"),
+    SEND_ALARM("sendAlarm"),
     UNKNOWN("");
 
     companion object {
