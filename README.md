@@ -22,7 +22,7 @@ POST /api/v1/demand/assign
 ```
 response
 ```json5
-{}
+{ "demandId": 34 }
 ```
 ### Cancel AssignIp Demand
 request
