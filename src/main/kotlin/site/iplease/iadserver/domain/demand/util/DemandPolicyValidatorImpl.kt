@@ -3,21 +3,22 @@ package site.iplease.iadserver.domain.demand.util
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.type.DemandPolicyGroupType
-import site.iplease.iadserver.domain.demand.exception.DemandAlreadyExistsException
-import site.iplease.iadserver.domain.demand.exception.DemandNotExistException
-import site.iplease.iadserver.domain.demand.exception.NotOwnedDemandException
-import site.iplease.iadserver.domain.demand.exception.OwnedDemandException
+import site.iplease.iadserver.domain.demand.exception.*
 import site.iplease.iadserver.domain.demand.repository.DemandRepository
+import site.iplease.iadserver.global.common.util.DateUtil
 
 @Component
 class DemandPolicyValidatorImpl(
-    private val demandRepository: DemandRepository
+    private val demandRepository: DemandRepository,
+    private val dateUtil: DateUtil
 ): DemandPolicyValidator {
-    override fun validate(demandId: Long, accountId: Long, policy: DemandPolicyGroupType): Mono<Unit> =
+    override fun validate(demand: DemandDto, policy: DemandPolicyGroupType): Mono<DemandDto> =
         policy.toMono().flatMap {
             when(it) {
-                DemandPolicyGroupType.DEMAND_CANCEL -> isExist(demandId).flatMap { isOwner(demandId, accountId) }
+                DemandPolicyGroupType.DEMAND_CANCEL -> isExist(demand.id).flatMap { isOwner(demand.id, demand.issuerId) }.map { demand }
+                DemandPolicyGroupType.DEMAND_CREATE -> checkExpireAt(demand).flatMap { demand -> checkTitle(demand) }.map { demand.copy(id = 0) }
             }
         }
 
@@ -37,4 +38,12 @@ class DemandPolicyValidatorImpl(
                 else if (beOwner) Mono.error(NotOwnedDemandException("해당 계정이 소유한 에약이 아닙니다! - 예약: $demandId, 계정: $accountId"))
                 else Mono.error(OwnedDemandException("해당 계정이 소유한 예약입니다! - 예약: $demandId, 계정: $accountId"))
             }
+
+    private fun checkExpireAt(demand: DemandDto) =
+        if(demand.expireAt.isAfter(dateUtil.dateNow())) demand.toMono()
+        else Mono.error(WrongExpireDateException("만료일은 오늘 이후여야합니다!", demand.expireAt))
+
+    private fun checkTitle(demand: DemandDto) =
+        if(demand.title.length <= 25) demand.toMono()
+        else Mono.error(WrongTitleException("신청 제목은 25자 이하여야합니다!"))
 }
