@@ -17,7 +17,7 @@ class IpAssignDemandErrorOnStatusSubscriberV1(
 
     override fun subscribe(message: IpAssignDemandErrorOnStatusMessage) {
         demandErrorOnStatusConverter.convert(message)
-            .flatMap { demand -> demandErrorService.errorOnStatus(demand) }
+            .flatMap { demand -> demandErrorService.handle(demand) }
             .doOnSuccess { logRollback() }
             .doOnError { logError(it) }
             .onErrorResume { Mono.empty() }

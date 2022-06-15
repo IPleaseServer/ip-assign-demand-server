@@ -18,7 +18,7 @@ class DemandErrorServiceImpl(
     private val dateUtil: DateUtil
 ): DemandErrorService {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    override fun errorOnStatus(demand: IpAssignDemandErrorOnStatusDto): Mono<Unit> =
+    override fun handle(demand: IpAssignDemandErrorOnStatusDto): Mono<Unit> =
         demandRepository.deleteById(demand.demandId)
             .then(Unit.toMono())
             .map { createRandomId() }
