@@ -8,7 +8,8 @@ import java.time.LocalDate
 
 @Table
 data class Demand (
-    @Id val id: Long = 0,
+    @Id val idx: Long = 0,
+    val identifier: Long,
     val issuerId: Long,
     val title: String,
     val description: String,
