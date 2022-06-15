@@ -23,7 +23,7 @@ class DemandDataConverterImpl: DemandDataConverter {
 
     override fun toDto(entity: Demand): Mono<DemandDto> =
         entity.toMono().map { DemandDto(
-                id = it.id,
+                id = it.identifier,
                 issuerId = it.issuerId,
                 title = it.title,
                 description = it.description,
@@ -33,7 +33,7 @@ class DemandDataConverterImpl: DemandDataConverter {
 
     override fun toEntity(dto: DemandDto): Mono<Demand> =
         dto.toMono().map { Demand(
-                id = it.id,
+                identifier = it.id,
                 issuerId = it.issuerId,
                 title = it.title,
                 description = it.description,
@@ -43,7 +43,7 @@ class DemandDataConverterImpl: DemandDataConverter {
 
     override fun toEntity(dto: IpAssignDemandCancelErrorOnStatusDto): Mono<Demand> =
         dto.toMono().map { Demand(
-            id = it.demandId,
+            identifier = it.demandId,
             issuerId = it.issuerId,
             title = it.title,
             description = it.description,

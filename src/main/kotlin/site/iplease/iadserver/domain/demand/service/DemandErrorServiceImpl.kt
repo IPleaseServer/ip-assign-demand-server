@@ -7,6 +7,7 @@ import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.repository.DemandRepository
+import site.iplease.iadserver.domain.demand.repository.DemandSaver
 import site.iplease.iadserver.domain.demand.util.DemandDataConverter
 import site.iplease.iadserver.global.common.util.DateUtil
 import site.iplease.iadserver.infra.alarm.service.PushAlarmService
@@ -17,12 +18,13 @@ import kotlin.random.Random
 class DemandErrorServiceImpl(
     private val demandDataConverter: DemandDataConverter,
     private val demandRepository: DemandRepository,
+    private val demandSaver: DemandSaver,
     private val pushAlarmService: PushAlarmService,
     private val dateUtil: DateUtil
 ): DemandErrorService {
     private val logger = LoggerFactory.getLogger(this::class.java)
     override fun handle(demand: IpAssignDemandErrorOnStatusDto): Mono<Unit> =
-        demandRepository.deleteById(demand.demandId)
+        demandRepository.deleteByIdentifier(demand.demandId)
             .then(Unit.toMono())
 
             .map { createRandomId() }
@@ -31,7 +33,8 @@ class DemandErrorServiceImpl(
 
     override fun handle(demand: IpAssignDemandCancelErrorOnStatusDto): Mono<Unit> =
         demandDataConverter.toEntity(demand)
-            .flatMap { entity -> demandRepository.save(entity) }
+            .map { entity -> logger.info("엔티티추가 - ${entity.issuerId}, ${entity.toString()}").let{entity} }
+            .flatMap { entity -> demandSaver.saveDemand(entity, entity.identifier) }
 
             .map { createRandomId() }
             .flatMap { id -> logErrorOnStatus(id, demand) }

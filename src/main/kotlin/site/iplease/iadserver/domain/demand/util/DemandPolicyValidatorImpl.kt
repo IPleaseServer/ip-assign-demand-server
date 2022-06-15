@@ -23,7 +23,7 @@ class DemandPolicyValidatorImpl(
         }
 
     private fun isExist(demandId: Long, beExists: Boolean = true) =
-        demandRepository.existsById(demandId)
+        demandRepository.existsByIdentifier(demandId)
             .flatMap { isExist ->
                 if(isExist == beExists) Unit.toMono()
                 else if (beExists) Mono.error(DemandNotExistException("해당 ID를 가진 예약정보를 찾을 수 없습니다! - $demandId"))
@@ -31,7 +31,7 @@ class DemandPolicyValidatorImpl(
             }
 
     private fun isOwner(demandId: Long, accountId: Long, beOwner: Boolean = true) =
-        demandRepository.findById(demandId)
+        demandRepository.findByIdentifier(demandId)
             .map { demand -> demand.issuerId == accountId }
             .flatMap { isOwner ->
                 if(isOwner == beOwner) Unit.toMono()
