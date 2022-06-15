@@ -10,7 +10,7 @@ import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelErr
 class DemandCancelErrorOnStatusConverterImpl: DemandCancelErrorOnStatusConverter {
     override fun convert(message: IpAssignDemandCancelErrorOnStatusMessage): Mono<IpAssignDemandCancelErrorOnStatusDto> =
         message.toMono().map { IpAssignDemandCancelErrorOnStatusDto(
-            id =  message.id,
+            demandId =  message.id,
             issuerId =  message.issuerId,
             title =  message.title,
             description =  message.description,
