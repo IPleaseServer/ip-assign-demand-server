@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
+import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.data.entity.Demand
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.domain.demand.data.request.AssignIpDemandRequest
@@ -22,7 +23,7 @@ class DemandDataConverterImpl: DemandDataConverter {
 
     override fun toDto(entity: Demand): Mono<DemandDto> =
         entity.toMono().map { DemandDto(
-                id = it.id,
+                id = it.identifier,
                 issuerId = it.issuerId,
                 title = it.title,
                 description = it.description,
@@ -32,13 +33,23 @@ class DemandDataConverterImpl: DemandDataConverter {
 
     override fun toEntity(dto: DemandDto): Mono<Demand> =
         dto.toMono().map { Demand(
-                id = it.id,
+                identifier = it.id,
                 issuerId = it.issuerId,
                 title = it.title,
                 description = it.description,
                 usage = it.usage,
                 expireAt = it.expireAt
             ) }
+
+    override fun toEntity(dto: IpAssignDemandCancelErrorOnStatusDto): Mono<Demand> =
+        dto.toMono().map { Demand(
+            identifier = it.demandId,
+            issuerId = it.issuerId,
+            title = it.title,
+            description = it.description,
+            usage = it.usage,
+            expireAt = it.expireAt
+        ) }
 
     override fun toIpAssignDemandCreateMessage(demand: DemandDto): Mono<IpAssignDemandCreateMessage> =
         demand.toMono().map { IpAssignDemandCreateMessage(
