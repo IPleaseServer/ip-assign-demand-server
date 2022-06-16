@@ -1,10 +1,10 @@
 package site.iplease.iadserver.domain.demand.service
 
 import reactor.core.publisher.Mono
-import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandCancelErrorOnStatusDto
-import site.iplease.iadserver.domain.demand.data.dto.IpAssignDemandErrorOnStatusDto
+import site.iplease.iadserver.domain.demand.data.dto.DemandCancelErrorOnStatusDto
+import site.iplease.iadserver.domain.demand.data.dto.DemandCreateErrorOnStatusDto
 
 interface DemandErrorService {
-    fun handle(demand: IpAssignDemandErrorOnStatusDto): Mono<Unit>
-    fun handle(demand: IpAssignDemandCancelErrorOnStatusDto): Mono<Unit>
+    fun handle(demand: DemandCreateErrorOnStatusDto): Mono<Unit>
+    fun handle(demand: DemandCancelErrorOnStatusDto): Mono<Unit>
 }

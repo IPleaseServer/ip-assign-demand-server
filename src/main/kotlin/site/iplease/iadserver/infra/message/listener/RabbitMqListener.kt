@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelErrorOnStatusMessage
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandErrorOnStatusMessage
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateErrorOnStatusMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandCancelErrorOnStatusSubscriber
-import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandErrorOnStatusSubscriber
+import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandCreateErrorOnStatusSubscriber
 import site.iplease.iadserver.infra.message.type.MessageType
 
 @Component
 class RabbitMqListener(
-    private val ipAssignDemandErrorOnStatusSubscriber: IpAssignDemandErrorOnStatusSubscriber,
+    private val ipAssignDemandCreateErrorOnStatusSubscriber: IpAssignDemandCreateErrorOnStatusSubscriber,
     private val ipAssignDemandCancelErrorOnStatusSubscriber: IpAssignDemandCancelErrorOnStatusSubscriber,
     private val objectMapper: ObjectMapper
 ) {
@@ -38,8 +38,8 @@ class RabbitMqListener(
     private fun handleMessage(type: MessageType, payload: String): Mono<Unit> =
         when(type) {
             MessageType.IP_ASSIGN_DEMAND_CREATE_ERROR_ON_STATUS -> objectMapper.toMono()
-                .map { it.readValue(payload, IpAssignDemandErrorOnStatusMessage::class.java) }
-                .map { message -> ipAssignDemandErrorOnStatusSubscriber.subscribe(message) }
+                .map { it.readValue(payload, IpAssignDemandCreateErrorOnStatusMessage::class.java) }
+                .map { message -> ipAssignDemandCreateErrorOnStatusSubscriber.subscribe(message) }
             MessageType.IP_ASSIGN_DEMAND_CANCEL_ERROR_ON_STATUS -> objectMapper.toMono()
                 .map { it.readValue(payload, IpAssignDemandCancelErrorOnStatusMessage::class.java) }
                 .map { message -> ipAssignDemandCancelErrorOnStatusSubscriber.subscribe(message) }

@@ -4,19 +4,19 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import site.iplease.iadserver.domain.demand.service.DemandErrorService
-import site.iplease.iadserver.domain.demand.util.DemandErrorOnStatusConverter
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandErrorOnStatusMessage
-import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandErrorOnStatusSubscriber
+import site.iplease.iadserver.domain.demand.util.DemandCreateErrorOnStatusConverter
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateErrorOnStatusMessage
+import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandCreateErrorOnStatusSubscriber
 
 @Component
-class IpAssignDemandErrorOnStatusSubscriberV1(
-    private val demandErrorOnStatusConverter: DemandErrorOnStatusConverter,
+class IpAssignDemandCreateErrorOnStatusSubscriberV1(
+    private val demandCreateErrorOnStatusConverter: DemandCreateErrorOnStatusConverter,
     private val demandErrorService: DemandErrorService
-): IpAssignDemandErrorOnStatusSubscriber {
+): IpAssignDemandCreateErrorOnStatusSubscriber {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    override fun subscribe(message: IpAssignDemandErrorOnStatusMessage) {
-        demandErrorOnStatusConverter.convert(message)
+    override fun subscribe(message: IpAssignDemandCreateErrorOnStatusMessage) {
+        demandCreateErrorOnStatusConverter.convert(message)
             .flatMap { demand -> demandErrorService.handle(demand) }
             .doOnSuccess { logRollback() }
             .doOnError { logError(it) }
