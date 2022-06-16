@@ -37,7 +37,6 @@ class RabbitMqListener(
 
     private fun handleMessage(type: MessageType, payload: String): Mono<Unit> =
         when(type) {
-            MessageType.IP_ASSIGN_DEMAND_ERROR_ON_STATUS,
             MessageType.IP_ASSIGN_DEMAND_CREATE_ERROR_ON_STATUS -> objectMapper.toMono()
                 .map { it.readValue(payload, IpAssignDemandErrorOnStatusMessage::class.java) }
                 .map { message -> ipAssignDemandErrorOnStatusSubscriber.subscribe(message) }
