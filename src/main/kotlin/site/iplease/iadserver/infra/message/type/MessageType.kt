@@ -5,7 +5,8 @@ enum class MessageType(
 ) {
     IP_ASSIGN_DEMAND_CREATE("ipAssignDemandCreate"),
     IP_ASSIGN_DEMAND_CANCEL("ipAssignDemandCancel"),
-    IP_ASSIGN_DEMAND_CREATE_ERROR_ON_STATUS("ipAssignDemandErrorOnStatus"), //TODO routingKey를 ipAssignDemandCreateErrorOnStatus로 변경
+    IP_ASSIGN_DEMAND_ERROR_ON_STATUS("ipAssignDemandErrorOnStatus"), //TODO routingKey를 ipAssignDemandCreateErrorOnStatus로 변경
+    IP_ASSIGN_DEMAND_CREATE_ERROR_ON_STATUS("ipAssignDemandCreateErrorOnStatus"),
     IP_ASSIGN_DEMAND_CANCEL_ERROR_ON_STATUS("ipAssignDemandCancelErrorOnStatus"),
     SEND_ALARM("sendAlarm"),
     UNKNOWN("");
