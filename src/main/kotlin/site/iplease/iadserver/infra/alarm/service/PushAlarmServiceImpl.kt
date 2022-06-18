@@ -12,10 +12,10 @@ import site.iplease.iadserver.infra.message.type.MessageType
 class PushAlarmServiceImpl(
     private val messagePublishService: MessagePublishService
 ): PushAlarmService {
-    override fun publish(receiverId: Long, title: String, description: String): Mono<Unit> =
+    override fun publish(receiverId: Long, title: String, description: String, type: AlarmType): Mono<Unit> =
         Unit.toMono()
             .map { SendAlarmMessage(
-                type = AlarmType.FCM,
+                type = type,
                 receiverId = receiverId,
                 title = title,
                 description = description
