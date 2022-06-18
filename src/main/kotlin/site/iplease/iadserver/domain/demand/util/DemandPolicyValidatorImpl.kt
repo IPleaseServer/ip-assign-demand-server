@@ -19,6 +19,7 @@ class DemandPolicyValidatorImpl(
             when(it) {
                 DemandPolicyType.DEMAND_CANCEL -> isExist(demand.id).flatMap { isOwner(demand.id, demand.issuerId) }.map { demand }
                 DemandPolicyType.DEMAND_CREATE -> checkExpireAt(demand).flatMap { demand -> checkTitle(demand) }.map { demand.copy(id = 0) }
+                DemandPolicyType.DEMAND_REJECT -> isExist(demand.id).map { demand }
             }
         }
 
