@@ -3,8 +3,8 @@ package site.iplease.iadserver.infra.alarm.service
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.infra.alarm.service.data.message.SendAlarmMessage
-import site.iplease.iadserver.infra.alarm.service.data.type.AlarmType
+import site.iplease.iadserver.infra.alarm.data.message.SendAlarmMessage
+import site.iplease.iadserver.infra.alarm.data.type.AlarmType
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
 

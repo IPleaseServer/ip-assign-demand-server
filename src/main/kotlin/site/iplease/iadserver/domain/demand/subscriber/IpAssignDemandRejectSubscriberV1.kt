@@ -14,7 +14,7 @@ import site.iplease.iadserver.global.demand.data.message.IpAssignDemandRejectErr
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandRejectMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandRejectSubscriber
 import site.iplease.iadserver.infra.alarm.service.PushAlarmService
-import site.iplease.iadserver.infra.alarm.service.data.type.AlarmType
+import site.iplease.iadserver.infra.alarm.data.type.AlarmType
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
 
