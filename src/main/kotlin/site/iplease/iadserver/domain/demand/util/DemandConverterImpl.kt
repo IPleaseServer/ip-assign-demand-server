@@ -24,6 +24,16 @@ class DemandConverterImpl: DemandConverter {
             expireAt = request.expireAt
         ) }
 
+    override fun toDto(demandId: Long): Mono<DemandDto> =
+        Unit.toMono().map { DemandDto(
+            id = demandId,
+            issuerId = 0,
+            title = "@title@",
+            description = "@description@",
+            usage = AssignIpUsageType.USE_NETWORK,
+            expireAt = LocalDate.MAX
+        ) }
+
     override fun toDto(entity: Demand): Mono<DemandDto> =
         entity.toMono().map { DemandDto(
                 id = it.identifier,
@@ -38,8 +48,8 @@ class DemandConverterImpl: DemandConverter {
         message.toMono().map { DemandDto(
             id = it.demandId,
             issuerId = 0,
-            title = "",
-            description = "",
+            title = "@title@",
+            description = "@description@",
             usage = AssignIpUsageType.USE_NETWORK,
             expireAt = LocalDate.MAX
         ) }
