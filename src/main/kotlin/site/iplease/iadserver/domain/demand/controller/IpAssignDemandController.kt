@@ -27,7 +27,7 @@ class IpAssignDemandController(
     @Qualifier("impl") private val ipAssignDemandService: IpAssignDemandService,//IP할당 거절기능 추가시 lazyReject로 바꾸어야합니다.
     private val messagePublishService: MessagePublishService,
     private val demandConverter: DemandConverter,
-    private val demandPolicyValidator: DemandPolicyValidator
+    @Qualifier("impl") private val demandPolicyValidator: DemandPolicyValidator
 ) {
     @DeleteMapping
     fun cancelAssignIpDemand(
