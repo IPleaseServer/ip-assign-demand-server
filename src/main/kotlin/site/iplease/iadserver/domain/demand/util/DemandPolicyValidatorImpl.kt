@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.demand.util
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
@@ -10,13 +11,14 @@ import site.iplease.iadserver.domain.demand.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DateUtil
 
 @Component
+@Qualifier("impl")
 class DemandPolicyValidatorImpl(
     private val demandRepository: DemandRepository,
     private val dateUtil: DateUtil
 ): DemandPolicyValidator {
     override fun validate(demand: DemandDto, policy: DemandPolicyType): Mono<DemandDto> =
         policy.toMono().flatMap {
-            when(it) {
+            when(it!!) {
                 DemandPolicyType.DEMAND_CANCEL -> isExist(demand.id).flatMap { isOwner(demand.id, demand.issuerId) }.map { demand }
                 DemandPolicyType.DEMAND_CREATE -> checkExpireAt(demand).flatMap { demand -> checkTitle(demand) }.map { demand.copy(id = 0) }
                 DemandPolicyType.DEMAND_REJECT -> isExist(demand.id).map { demand }

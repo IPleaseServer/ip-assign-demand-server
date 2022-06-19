@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.demand.service
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
@@ -9,6 +10,7 @@ import site.iplease.iadserver.domain.demand.repository.DemandSaver
 import site.iplease.iadserver.domain.demand.util.DemandConverter
 
 @Service
+@Qualifier("impl")
 class IpAssignDemandServiceImpl(
     private val demandRepository: DemandRepository,
     private val demandSaver: DemandSaver,
@@ -26,7 +28,7 @@ class IpAssignDemandServiceImpl(
             .flatMap { entity -> demandConverter.toDto(entity) } //향후 반환값을 위해 조회한 신청을 Dto로 치환한다.
             .flatMap { dto -> demandRepository.deleteByIdentifier(demandId).then(dto.toMono()) } //신청을 제거하고, 미리 구성해둔 반환값을 발행한다.
 
-    override fun rejectDemand(demandId: Long): Mono<DemandDto> =
+    override fun rejectDemand(demandId: Long, reason: String): Mono<DemandDto> =
         demandRepository.findByIdentifier(demandId)//DataStore에서 신청을 조회한다.
             .flatMap { entity -> demandConverter.toDto(entity) }//향후 반환값을 위해 조회한 신청을 Dto로 치환한다.
             .flatMap { dto -> demandRepository.deleteByIdentifier(demandId).then(dto.toMono()) }//신청을 제거하고, 미리 구성해둔 반환값을 발행한다.
