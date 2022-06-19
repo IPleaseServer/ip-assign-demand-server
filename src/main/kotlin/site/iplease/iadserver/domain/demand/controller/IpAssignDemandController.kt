@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.demand.controller
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -23,7 +24,7 @@ import java.time.LocalDate
 @RestController
 @RequestMapping("/api/v1/demand/assign")
 class IpAssignDemandController(
-    private val ipAssignDemandService: IpAssignDemandService,
+    @Qualifier("impl") private val ipAssignDemandService: IpAssignDemandService,//IP할당 거절기능 추가시 lazyReject로 바꾸어야합니다.
     private val messagePublishService: MessagePublishService,
     private val demandConverter: DemandConverter,
     private val demandPolicyValidator: DemandPolicyValidator

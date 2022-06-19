@@ -1,22 +1,26 @@
 package site.iplease.iadserver.domain.demand.service
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.entity.RejectedDemand
 import site.iplease.iadserver.domain.demand.repository.DemandRepository
-import site.iplease.iadserver.domain.demand.repository.DemandSaver
 import site.iplease.iadserver.domain.demand.repository.RejectedDemandRepository
 import site.iplease.iadserver.domain.demand.util.DemandConverter
 
 @Service
+@Qualifier("lazyReject")
 class LazyRejectIpAssignDemandService(
     private val rejectedDemandRepository: RejectedDemandRepository,
     private val demandRepository: DemandRepository,
-    demandSaver: DemandSaver,
-    private val demandConverter: DemandConverter
-): IpAssignDemandServiceImpl(demandRepository, demandSaver, demandConverter) {
+    private val demandConverter: DemandConverter,
+    @Qualifier("impl") private val ipAssignDemandService: IpAssignDemandService
+): IpAssignDemandService {
+    override fun addDemand(demand: DemandDto): Mono<DemandDto> = ipAssignDemandService.addDemand(demand)
+    override fun cancelDemand(demandId: Long): Mono<DemandDto> = ipAssignDemandService.cancelDemand(demandId)
+
     override fun rejectDemand(demandId: Long, reason: String): Mono<DemandDto> =
         demandRepository.findByIdentifier(demandId)//DataStore에서 신청을 조회한다.
             .flatMap { entity -> demandConverter.toDto(entity) }//향후 반환값을 위해 조회한 신청을 Dto로 치환한다.

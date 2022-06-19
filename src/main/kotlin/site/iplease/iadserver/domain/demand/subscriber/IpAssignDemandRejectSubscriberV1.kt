@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.demand.subscriber
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -22,7 +23,7 @@ import site.iplease.iadserver.infra.message.type.MessageType
 class IpAssignDemandRejectSubscriberV1(
     private val demandConverter: DemandConverter,
     private val demandPolicyValidator: DemandPolicyValidator,
-    private val demandService: IpAssignDemandService,
+    @Qualifier("lazyReject") private val demandService: IpAssignDemandService,
     private val pushAlarmService: PushAlarmService,
     private val messagePublishService: MessagePublishService
 ): IpAssignDemandRejectSubscriber {

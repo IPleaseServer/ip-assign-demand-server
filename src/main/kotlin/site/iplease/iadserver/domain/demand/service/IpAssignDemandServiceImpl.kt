@@ -1,5 +1,7 @@
 package site.iplease.iadserver.domain.demand.service
 
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
@@ -7,6 +9,8 @@ import site.iplease.iadserver.domain.demand.repository.DemandRepository
 import site.iplease.iadserver.domain.demand.repository.DemandSaver
 import site.iplease.iadserver.domain.demand.util.DemandConverter
 
+@Service
+@Qualifier("impl")
 class IpAssignDemandServiceImpl(
     private val demandRepository: DemandRepository,
     private val demandSaver: DemandSaver,
