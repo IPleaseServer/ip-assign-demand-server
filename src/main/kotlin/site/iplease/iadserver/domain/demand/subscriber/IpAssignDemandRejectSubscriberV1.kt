@@ -6,32 +6,25 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
-import site.iplease.iadserver.domain.demand.data.type.DemandPolicyType
 import site.iplease.iadserver.domain.demand.exception.IpAssignDemandRejectFailureException
 import site.iplease.iadserver.domain.demand.service.IpAssignDemandService
-import site.iplease.iadserver.domain.demand.util.DemandConverter
-import site.iplease.iadserver.domain.demand.util.DemandPolicyValidator
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandRejectErrorOnStatusMessage
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandRejectMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandRejectSubscriber
-import site.iplease.iadserver.infra.alarm.service.PushAlarmService
 import site.iplease.iadserver.infra.alarm.data.type.AlarmType
+import site.iplease.iadserver.infra.alarm.service.PushAlarmService
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
 
 @Component
 class IpAssignDemandRejectSubscriberV1(
-    private val demandConverter: DemandConverter,
-    private val demandPolicyValidator: DemandPolicyValidator,
     @Qualifier("lazyReject") private val demandService: IpAssignDemandService,
     private val pushAlarmService: PushAlarmService,
     private val messagePublishService: MessagePublishService
 ): IpAssignDemandRejectSubscriber {
     override fun subscribe(message: IpAssignDemandRejectMessage) {
         //메세지에서 demandId를 가져와, 예약을 거절시킨다.
-        demandConverter.toDto(message.demandId)
-            .flatMap { demand -> demandPolicyValidator.validate(demand, DemandPolicyType.DEMAND_REJECT) }
-            .flatMap { _ -> demandService.rejectDemand(message.demandId, message.reason) }
+        demandService.rejectDemand(message.demandId, message.reason)
             .flatMap { demand -> sendStudentAlarm(demand, message) }
             .onErrorResume { throwable -> Mono.error(IpAssignDemandRejectFailureException(throwable)) }//로직 처리중, 오류가 발생하면, 해당 오류를 Wrapping한다.
             .flatMap { _ -> pushAlarmService.publish(message.issuerId, "신청 거절에 성공했어요!", "선생님의 메세지를 거절사유에 담아 학생에게 전달하고있어요.") }//교사에게 거절성공 알림을 보낸다.
