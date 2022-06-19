@@ -16,5 +16,7 @@ class RedisRejectedDemandRepository(
             .set(formatKey(rejectedDemand.demandId), rejectedDemand)
             .then()
 
+    override fun exist(id: Long): Mono<Boolean> = redisTemplate.hasKey(formatKey(id))
+
     private fun formatKey(demandId: Long) = "${rejectedDemandProperties.redisKeyPrefix}_$demandId"
 }
