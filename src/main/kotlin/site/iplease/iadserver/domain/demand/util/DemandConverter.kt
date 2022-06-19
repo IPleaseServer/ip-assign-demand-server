@@ -10,8 +10,9 @@ import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelMes
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandConfirmMessage
 
 interface DemandConverter {
-    fun toDto(accountId: Long, request: AssignIpDemandRequest): Mono<DemandDto>
+    fun toDto(demandId: Long): Mono<DemandDto>
     fun toDto(entity: Demand): Mono<DemandDto>
+    fun toDto(accountId: Long, request: AssignIpDemandRequest): Mono<DemandDto>
     fun toDto(message: IpAssignDemandConfirmMessage): Mono<DemandDto>
     fun toEntity(dto: DemandDto): Mono<Demand>
     fun toEntity(dto: DemandCancelErrorOnStatusDto): Mono<Demand>
