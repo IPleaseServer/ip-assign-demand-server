@@ -31,9 +31,8 @@ class IpAssignDemandRejectSubscriberV1(
         demandConverter.toDto(message.demandId)
             .flatMap { demand -> demandPolicyValidator.validate(demand, DemandPolicyType.DEMAND_REJECT) }
             .flatMap { _ -> demandService.rejectDemand(message.demandId) }
-            //TODO Error전파 포인트를 알람 전송 전으로 할건지 후로할건지 고민해보기
-            .onErrorResume { throwable -> Mono.error(IpAssignDemandRejectFailureException(throwable)) }//로직 처리중, 오류가 발생하면, 해당 오류를 Wrapping한다.
             .flatMap { demand -> sendStudentAlarm(demand, message) }
+            .onErrorResume { throwable -> Mono.error(IpAssignDemandRejectFailureException(throwable)) }//로직 처리중, 오류가 발생하면, 해당 오류를 Wrapping한다.
             .flatMap { _ -> pushAlarmService.publish(message.issuerId, "신청 거절에 성공했어요!", "선생님의 메세지를 거절사유에 담아 학생에게 전달하고있어요.") }//교사에게 거절성공 알림을 보낸다.
             .onErrorResume(IpAssignDemandRejectFailureException::class.java) {
                 val errorMessage = IpAssignDemandRejectErrorOnStatusMessage(demandId =  message.demandId, issuerId = message.issuerId, originStatus = message.originStatus)
