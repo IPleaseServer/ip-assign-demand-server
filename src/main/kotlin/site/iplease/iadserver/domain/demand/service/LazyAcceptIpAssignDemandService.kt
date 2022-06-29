@@ -16,7 +16,7 @@ import site.iplease.iadserver.domain.demand.util.DemandPolicyValidator
 @Qualifier("lazyAccept")
 class LazyAcceptIpAssignDemandService(
     @Qualifier("lazyAccept") private val demandPolicyValidator: DemandPolicyValidator,
-    private val accpetedDemandRepository: AcceptedDemandRepository,
+    private val acceptedDemandRepository: AcceptedDemandRepository,
     private val demandRepository: DemandRepository,
     private val demandConverter: DemandConverter,
     @Qualifier("impl") private val ipAssignDemandService: IpAssignDemandService
@@ -32,5 +32,5 @@ class LazyAcceptIpAssignDemandService(
             .flatMap { demand -> demandPolicyValidator.validate(demand, DemandPolicyType.DEMAND_ACCEPT) }
             .flatMap { _ -> demandRepository.findByIdentifier(demandId) }
             .flatMap { entity -> demandConverter.toDto(entity) }
-            .flatMap { dto -> accpetedDemandRepository.insert(AcceptedDemand(dto.id, assignIp)).then(dto.toMono()) }
+            .flatMap { dto -> acceptedDemandRepository.insert(AcceptedDemand(dto.id, assignIp)).then(dto.toMono()) }
 }
