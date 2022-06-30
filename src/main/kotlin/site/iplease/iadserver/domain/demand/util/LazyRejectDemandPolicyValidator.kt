@@ -8,13 +8,13 @@ import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.type.DemandPolicyType
 import site.iplease.iadserver.domain.demand.exception.AlreadyRejectedDemandException
-import site.iplease.iadserver.domain.demand.repository.RedisRejectedDemandRepository
+import site.iplease.iadserver.domain.demand.repository.RejectedDemandRepository
 
 @Component
 @Qualifier("lazyReject")
 class LazyRejectDemandPolicyValidator(
     @Qualifier("impl") private val demandPolicyValidator: DemandPolicyValidator,
-    private val rejectedDemandRepository: RedisRejectedDemandRepository //TODO 아니 지인호 이 무친놈아 PSA안지키냐 ㅋㅋ
+    private val rejectedDemandRepository: RejectedDemandRepository
 ): DemandPolicyValidator {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
