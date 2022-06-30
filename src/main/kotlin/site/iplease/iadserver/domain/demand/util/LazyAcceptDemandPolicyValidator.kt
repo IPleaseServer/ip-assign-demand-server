@@ -9,12 +9,14 @@ import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.type.DemandPolicyType
 import site.iplease.iadserver.domain.demand.exception.AlreadyRejectedDemandException
 import site.iplease.iadserver.domain.demand.repository.AcceptedDemandRepository
+import site.iplease.iadserver.domain.demand.repository.RejectedDemandRepository
 
 @Component
 @Qualifier("lazyAccept")
 class LazyAcceptDemandPolicyValidator(
     @Qualifier("impl") private val demandPolicyValidator: DemandPolicyValidator,
-    private val acceptedDemandRepository: AcceptedDemandRepository
+    private val acceptedDemandRepository: AcceptedDemandRepository,
+    private val rejectedDemandRepository: RejectedDemandRepository,
 ): DemandPolicyValidator {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -27,6 +29,7 @@ class LazyAcceptDemandPolicyValidator(
 
     private fun isExistInAcceptedDemand(demand: DemandDto, beExists: Boolean = true): Mono<Unit> =
         acceptedDemandRepository.exist(demand.id)
+            .flatMap { isExists -> rejectedDemandRepository.exist(demand.id).map { isExists || it } }
             .flatMap { isExists ->
                 if(isExists == beExists) Unit.toMono()
                 else {// StatusManage서비스와 일관성이 깨져있을떄 발생함
