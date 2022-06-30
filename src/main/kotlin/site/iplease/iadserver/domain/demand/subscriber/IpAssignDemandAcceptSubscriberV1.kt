@@ -23,8 +23,8 @@ class IpAssignDemandAcceptSubscriberV1(
             .onErrorResume { throwable -> Mono.error(IpAssignDemandAcceptFailureException(throwable)) }
             .flatMap { demand -> demandConverter.toAssignIpCreateMessage(demand, message) }
             .flatMap { messagePublishService.publish(MessageType.ASSIGN_IP_CREATE, it) }
-            .onErrorResume(IpAssignDemandAcceptFailureException::class.java) {
-                val errorMessage = IpAssignDemandAcceptErrorOnStatusMessage(message.issuerId, message.demandId, message.assignIp, message.originStatus)
+            .onErrorResume(IpAssignDemandAcceptFailureException::class.java) { throwable ->
+                val errorMessage = IpAssignDemandAcceptErrorOnStatusMessage(message.issuerId, message.demandId, message.assignIp, message.originStatus, throwable.localizedMessage)
                 messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND, errorMessage)
             }.block()
     }
