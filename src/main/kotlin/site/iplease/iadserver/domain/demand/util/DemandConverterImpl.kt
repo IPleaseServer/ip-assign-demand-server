@@ -6,11 +6,9 @@ import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.dto.DemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.data.entity.Demand
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.domain.demand.data.request.AssignIpDemandRequest
 import site.iplease.iadserver.domain.demand.data.type.AssignIpUsageType
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelMessage
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandConfirmMessage
+import site.iplease.iadserver.global.demand.data.message.*
 import java.time.LocalDate
 
 @Component
@@ -88,5 +86,21 @@ class DemandConverterImpl: DemandConverter {
             description = demand.description,
             usage = demand.usage,
             expireAt = demand.expireAt
+        ) }
+
+    override fun toAssignIpCreateMessage(
+        demand: DemandDto,
+        message: IpAssignDemandAcceptMessage
+    ): Mono<AssignIpCreateMessage> =
+        demand.toMono().map { AssignIpCreateMessage(
+            assignIp = message.assignIp,
+            issuerId = message.issuerId,
+            originStatus = message.originStatus,
+            demandId = message.demandId,
+            demandIssuerId = demand.issuerId,
+            title = demand.title,
+            description = demand.description,
+            usage = demand.usage,
+            expireAt = demand.expireAt,
         ) }
 }
