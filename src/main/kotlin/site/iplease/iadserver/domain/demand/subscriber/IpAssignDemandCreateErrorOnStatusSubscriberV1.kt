@@ -25,11 +25,11 @@ class IpAssignDemandCreateErrorOnStatusSubscriberV1(
     }
 
     private fun logRollback() {
-        logger.info("신청 추가에 대한 보상트랜젝션을 성공적으로 수행하였습니다!")
+        logger.info("예약 추가에 대한 보상트랜젝션을 성공적으로 수행하였습니다!")
     }
 
     private fun logError(throwable: Throwable) {
-        logger.info("신청 추가에 대한 보상트랜젝션을 수행하던중 오류가 발생하였습니다!")
+        logger.info("예약 추가에 대한 보상트랜젝션을 수행하던중 오류가 발생하였습니다!")
         logger.info("exception: ${throwable::class.simpleName}")
         logger.info("message: ${throwable.localizedMessage}")
         logger.trace("stacktrace")

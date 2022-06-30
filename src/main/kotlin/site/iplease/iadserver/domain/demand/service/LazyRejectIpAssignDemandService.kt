@@ -24,8 +24,6 @@ class LazyRejectIpAssignDemandService(
     override fun addDemand(demand: DemandDto): Mono<DemandDto> = ipAssignDemandService.addDemand(demand)
     override fun cancelDemand(demandId: Long): Mono<DemandDto> = ipAssignDemandService.cancelDemand(demandId)
 
-    override fun acceptDemand(demandId: Long, assignIp: String): Mono<DemandDto> = ipAssignDemandService.acceptDemand(demandId, assignIp)
-
     override fun rejectDemand(demandId: Long, reason: String): Mono<DemandDto> =
         demandConverter.toDto(demandId)
             .flatMap { demand -> demandPolicyValidator.validate(demand, DemandPolicyType.DEMAND_REJECT) }
