@@ -28,8 +28,8 @@ class IpAssignDemandRejectSubscriberV1(
             .flatMap { demand -> sendStudentAlarm(demand, message) }
             .onErrorResume { throwable -> Mono.error(IpAssignDemandRejectFailureException(throwable)) }//로직 처리중, 오류가 발생하면, 해당 오류를 Wrapping한다.
             .flatMap { _ -> pushAlarmService.publish(message.issuerId, "신청 거절에 성공했어요!", "선생님의 메세지를 거절사유에 담아 학생에게 전달하고있어요.") }//교사에게 거절성공 알림을 보낸다.
-            .onErrorResume(IpAssignDemandRejectFailureException::class.java) {
-                val errorMessage = IpAssignDemandRejectErrorOnStatusMessage(demandId =  message.demandId, issuerId = message.issuerId, originStatus = message.originStatus)
+            .onErrorResume(IpAssignDemandRejectFailureException::class.java) { throwable ->
+                val errorMessage = IpAssignDemandRejectErrorOnStatusMessage(message.demandId, message.issuerId, message.originStatus, throwable.localizedMessage)
                 messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_REJECT_ERROR_ON_STATUS, errorMessage)//Wrapping했던 오류에 대한 처리(오류 메세지 전파)를 진행한다.
             }.block()
     }
