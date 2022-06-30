@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono
 import site.iplease.iadserver.domain.demand.exception.IpAssignDemandAcceptFailureException
 import site.iplease.iadserver.domain.demand.service.IpAssignDemandService
 import site.iplease.iadserver.domain.demand.util.DemandConverter
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandAcceptErrorOnStatusMessage
+import site.iplease.iadserver.global.demand.data.message.IpAssignDemandAcceptErrorOnDemandMessage
 import site.iplease.iadserver.global.demand.data.message.IpAssignDemandAcceptMessage
 import site.iplease.iadserver.global.demand.subscriber.IpAssignDemandAcceptSubscriber
 import site.iplease.iadserver.infra.message.service.MessagePublishService
@@ -24,7 +24,7 @@ class IpAssignDemandAcceptSubscriberV1(
             .flatMap { demand -> demandConverter.toAssignIpCreateMessage(demand, message) }
             .flatMap { messagePublishService.publish(MessageType.ASSIGN_IP_CREATE, it) }
             .onErrorResume(IpAssignDemandAcceptFailureException::class.java) { throwable ->
-                val errorMessage = IpAssignDemandAcceptErrorOnStatusMessage(message.issuerId, message.demandId, message.assignIp, message.originStatus, throwable.localizedMessage)
+                val errorMessage = IpAssignDemandAcceptErrorOnDemandMessage(message.issuerId, message.demandId, message.assignIp, message.originStatus, throwable.localizedMessage)
                 messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND, errorMessage)
             }.block()
     }
