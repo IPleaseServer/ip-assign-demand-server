@@ -4,10 +4,8 @@ import reactor.core.publisher.Mono
 import site.iplease.iadserver.domain.demand.data.dto.DemandDto
 import site.iplease.iadserver.domain.demand.data.dto.DemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.demand.data.entity.Demand
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.domain.demand.data.request.AssignIpDemandRequest
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandCancelMessage
-import site.iplease.iadserver.global.demand.data.message.IpAssignDemandConfirmMessage
+import site.iplease.iadserver.global.demand.data.message.*
 
 interface DemandConverter {
     fun toDto(demandId: Long): Mono<DemandDto>
@@ -18,4 +16,5 @@ interface DemandConverter {
     fun toEntity(dto: DemandCancelErrorOnStatusDto): Mono<Demand>
     fun toIpAssignDemandCreateMessage(demand: DemandDto): Mono<IpAssignDemandCreateMessage>
     fun toIpAssignDemandCancelMessage(demand: DemandDto): Mono<IpAssignDemandCancelMessage>
+    fun toAssignIpCreateMessage(demand: DemandDto, message: IpAssignDemandAcceptMessage): Mono<AssignIpCreateMessage>
 }

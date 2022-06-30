@@ -33,9 +33,7 @@ class DemandErrorServiceImpl(
 
     override fun handle(demand: DemandCancelErrorOnStatusDto): Mono<Unit> =
         demandConverter.toEntity(demand)
-            .map { entity -> logger.info("엔티티추가 - ${entity.issuerId}, ${entity.toString()}").let{entity} }
             .flatMap { entity -> demandSaver.saveDemand(entity, entity.identifier) }
-
             .map { createRandomId() }
             .flatMap { id -> logErrorOnStatus(id, demand) }
             .flatMap { id -> pushAlarmService.publish(demand.issuerId, "할당IP신청취소중, 오류가 발생했습니다!", "다음 아이디로 관리자에게 문의해주세요!  - $id") }
