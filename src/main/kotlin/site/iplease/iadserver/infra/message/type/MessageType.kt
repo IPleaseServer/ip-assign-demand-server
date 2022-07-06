@@ -12,7 +12,7 @@ enum class MessageType(
     IP_ASSIGN_DEMAND_CANCEL_ERROR_ON_STATUS("ipAssignDemandCancelErrorOnStatus"),
     IP_ASSIGN_DEMAND_REJECT_ERROR_ON_DEMAND("ipAssignDemandRejectErrorOnDemand"),
     IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND("ipAssignDemandAcceptErrorOnDemand"),
-    ASSIGN_IP_CREATE("assignIpCreate"),
+    IP_ASSIGN_DEMAND_ACCEPTED("ipAssignDemandAccepted"),
     SEND_ALARM("sendAlarm"),
     UNKNOWN(""),;
 

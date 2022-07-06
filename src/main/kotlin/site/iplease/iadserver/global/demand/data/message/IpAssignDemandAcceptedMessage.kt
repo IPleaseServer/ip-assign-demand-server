@@ -4,7 +4,7 @@ import site.iplease.iadserver.domain.demand.data.type.AssignIpUsageType
 import site.iplease.iadserver.global.demand.data.type.DemandStatusType
 import java.time.LocalDate
 
-data class AssignIpCreateMessage (
+data class IpAssignDemandAcceptedMessage (
     val assignIp: String,
     //Push Alarm Data
     val issuerId: Long,

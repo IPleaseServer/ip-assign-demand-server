@@ -16,5 +16,5 @@ interface DemandConverter {
     fun toEntity(dto: DemandCancelErrorOnStatusDto): Mono<Demand>
     fun toIpAssignDemandCreateMessage(demand: DemandDto): Mono<IpAssignDemandCreateMessage>
     fun toIpAssignDemandCancelMessage(demand: DemandDto): Mono<IpAssignDemandCancelMessage>
-    fun toAssignIpCreateMessage(demand: DemandDto, message: IpAssignDemandAcceptMessage): Mono<AssignIpCreateMessage>
+    fun toAssignIpCreateMessage(demand: DemandDto, message: IpAssignDemandAcceptMessage): Mono<IpAssignDemandAcceptedMessage>
 }

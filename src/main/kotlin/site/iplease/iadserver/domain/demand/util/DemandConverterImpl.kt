@@ -91,8 +91,8 @@ class DemandConverterImpl: DemandConverter {
     override fun toAssignIpCreateMessage(
         demand: DemandDto,
         message: IpAssignDemandAcceptMessage
-    ): Mono<AssignIpCreateMessage> =
-        demand.toMono().map { AssignIpCreateMessage(
+    ): Mono<IpAssignDemandAcceptedMessage> =
+        demand.toMono().map { IpAssignDemandAcceptedMessage(
             assignIp = message.assignIp,
             issuerId = message.issuerId,
             originStatus = message.originStatus,
