@@ -22,11 +22,11 @@ class RemoveRejectedDemandStrategyImpl(
             .subscribe (
                 { rejectedDemand -> logger.trace("Id가 ${rejectedDemand.demandId}인 예약을 제거하였습니다!") },
                 { throwable ->
-                    logger.warn("에약을 제거하던중 오류가 발생하였습니다!")
+                    logger.warn("거절된 신청을 제거하던중 오류가 발생하였습니다!")
                     logger.warn("exception: ${throwable::class.simpleName}")
                     logger.warn("message: ${throwable.localizedMessage}")
                     logger.trace("stack trace")
                     logger.trace(throwable.stackTraceToString())
-                }, { logger.info("예약 일괄삭제작업을 마쳤습니다!") })
+                }, { logger.info("거절된 신청 일괄삭제작업을 마쳤습니다!") })
     }
 }
