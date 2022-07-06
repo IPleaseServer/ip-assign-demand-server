@@ -1,6 +1,6 @@
 package site.iplease.iadserver.global.demand.data.message
 
-import site.iplease.iadserver.domain.demand.data.type.AssignIpUsageType
+import site.iplease.iadserver.domain.demand.legacy.data.type.AssignIpUsageType
 import java.time.LocalDate
 
 data class IpAssignDemandCancelMessage(

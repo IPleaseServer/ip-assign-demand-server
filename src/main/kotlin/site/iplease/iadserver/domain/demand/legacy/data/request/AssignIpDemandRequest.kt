@@ -1,14 +1,11 @@
-package site.iplease.iadserver.global.demand.data.message
+package site.iplease.iadserver.domain.demand.legacy.data.request
 
 import site.iplease.iadserver.domain.demand.legacy.data.type.AssignIpUsageType
 import java.time.LocalDate
 
-data class IpAssignDemandCancelErrorOnStatusMessage(
-    val id: Long,
-    val issuerId: Long,
+data class AssignIpDemandRequest (
     val title: String,
     val description: String,
     val usage: AssignIpUsageType,
     val expireAt: LocalDate,
-    val message: String
 )
