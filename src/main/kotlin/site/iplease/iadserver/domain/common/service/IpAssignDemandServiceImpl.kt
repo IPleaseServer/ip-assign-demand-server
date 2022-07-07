@@ -1,16 +1,15 @@
 package site.iplease.iadserver.domain.common.service
 
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.repository.DemandSaver
 import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.common.util.DemandConverter
-import site.iplease.iadserver.global.common.data.dto.DemandDto
 
-@Service
+//@Service
 @Qualifier("impl")
 class IpAssignDemandServiceImpl(
     private val demandRepository: DemandRepository,
