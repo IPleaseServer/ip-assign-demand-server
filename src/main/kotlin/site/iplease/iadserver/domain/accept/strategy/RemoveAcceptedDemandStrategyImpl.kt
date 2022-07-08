@@ -8,7 +8,7 @@ import site.iplease.iadserver.domain.accept.repository.AcceptedDemandRepository
 import site.iplease.iadserver.global.common.repository.DemandRepository
 
 @Component
-class RemoveRejectedDemandStrategyImpl(
+class RemoveAcceptedDemandStrategyImpl(
     private val acceptedDemandRepository: AcceptedDemandRepository,
     private val demandRepository: DemandRepository
 ): RemoveAcceptedDemandStrategy {

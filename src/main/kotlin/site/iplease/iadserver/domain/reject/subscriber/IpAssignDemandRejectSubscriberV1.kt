@@ -1,13 +1,12 @@
 package site.iplease.iadserver.domain.reject.subscriber
 
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.reject.exception.IpAssignDemandRejectFailureException
-import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.common.data.dto.DemandDto
+import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.error.data.message.IpAssignDemandRejectErrorOnDemandMessage
 import site.iplease.iadserver.global.reject.data.message.IpAssignDemandRejectMessage
 import site.iplease.iadserver.global.reject.subscriber.IpAssignDemandRejectSubscriber
@@ -18,7 +17,7 @@ import site.iplease.iadserver.infra.message.type.MessageType
 
 @Component
 class IpAssignDemandRejectSubscriberV1(
-    @Qualifier("lazyReject") private val demandService: IpAssignDemandService,
+    private val demandService: IpAssignDemandService,
     private val pushAlarmService: PushAlarmService,
     private val messagePublishService: MessagePublishService
 ): IpAssignDemandRejectSubscriber {
