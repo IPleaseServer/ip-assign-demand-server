@@ -8,9 +8,6 @@ import site.iplease.iadserver.domain.error.util.DemandAcceptedErrorOnManageConve
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedErrorOnManageMessage
 import site.iplease.iadserver.global.error.subscriber.IpAssignDemandAcceptedErrorOnManageMessageSubscriber
 
-//- IP할당신청
-//demandId에 대한 AssignIpDemand가 존재하지 않을경우 AssignIpDemand를 추가한다.
-//삭제 대기열에 demandId에 대한 AssignIpDemand가 존재할 경우 이를 제거한다.
 @Component
 class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1(
     private val demandAcceptedErrorOnManageConverter: DemandAcceptedErrorOnManageConverter,
@@ -18,15 +15,6 @@ class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1(
 ): IpAssignDemandAcceptedErrorOnManageMessageSubscriber {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    /*
-
-        demandCancelErrorOnStatusConverter.convert(message)
-            .flatMap { demand -> demandErrorService.handle(demand) }
-            .doOnSuccess { logRollback() }
-            .doOnError { logError(it) }
-            .onErrorResume { Mono.empty() }
-            .block()
-     */
     override fun subscribe(message: IpAssignDemandAcceptedErrorOnManageMessage) {
         demandAcceptedErrorOnManageConverter.convert(message)
             .flatMap { demand -> demandErrorService.handle(demand) }
