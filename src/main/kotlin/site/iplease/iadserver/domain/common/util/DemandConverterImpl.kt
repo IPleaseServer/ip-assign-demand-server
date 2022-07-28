@@ -14,6 +14,7 @@ import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCancelMessage
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.global.confirm.data.message.IpAssignDemandConfirmMessage
+import site.iplease.iadserver.global.error.data.dto.DemandAcceptedErrorOnManageDto
 import java.time.LocalDate
 
 @Component
@@ -69,6 +70,16 @@ class DemandConverterImpl: DemandConverter {
 
     override fun toEntity(dto: DemandCancelErrorOnStatusDto): Mono<Demand> =
         dto.toMono().map { Demand(
+            identifier = it.demandId,
+            issuerId = it.issuerId,
+            title = it.title,
+            description = it.description,
+            usage = it.usage,
+            expireAt = it.expireAt
+        ) }
+
+    override fun toEntity(demand: DemandAcceptedErrorOnManageDto): Mono<Demand> =
+        demand.toMono().map { Demand(
             identifier = it.demandId,
             issuerId = it.issuerId,
             title = it.title,
