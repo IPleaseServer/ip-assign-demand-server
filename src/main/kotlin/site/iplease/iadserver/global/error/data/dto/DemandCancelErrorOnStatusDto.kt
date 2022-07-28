@@ -1,4 +1,4 @@
-package site.iplease.iadserver.domain.error.data.dto
+package site.iplease.iadserver.global.error.data.dto
 
 import site.iplease.iadserver.global.common.data.type.AssignIpUsageType
 import java.time.LocalDate

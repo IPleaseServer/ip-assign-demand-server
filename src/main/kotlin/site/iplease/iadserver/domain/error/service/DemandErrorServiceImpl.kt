@@ -4,8 +4,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.domain.error.data.dto.DemandCancelErrorOnStatusDto
-import site.iplease.iadserver.domain.error.data.dto.DemandCreateErrorOnStatusDto
+import site.iplease.iadserver.global.error.data.dto.DemandCancelErrorOnStatusDto
+import site.iplease.iadserver.global.error.data.dto.DemandCreateErrorOnStatusDto
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.repository.DemandSaver
 import site.iplease.iadserver.global.common.util.DemandConverter

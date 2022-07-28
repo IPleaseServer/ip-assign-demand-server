@@ -1,4 +1,4 @@
-package site.iplease.iadserver.global.accept.subscriber
+package site.iplease.iadserver.global.error.subscriber
 
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedErrorOnManageMessage
 

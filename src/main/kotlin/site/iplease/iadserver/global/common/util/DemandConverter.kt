@@ -3,7 +3,7 @@ package site.iplease.iadserver.global.common.util
 import reactor.core.publisher.Mono
 import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.domain.common.data.request.AssignIpDemandRequest
-import site.iplease.iadserver.domain.error.data.dto.DemandCancelErrorOnStatusDto
+import site.iplease.iadserver.global.error.data.dto.DemandCancelErrorOnStatusDto
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMessage
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedMessage
 import site.iplease.iadserver.global.common.data.dto.DemandDto

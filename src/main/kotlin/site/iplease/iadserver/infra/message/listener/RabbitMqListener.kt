@@ -10,7 +10,7 @@ import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMessage
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedErrorOnManageMessage
 import site.iplease.iadserver.global.accept.subscriber.IpAssignDemandAcceptSubscriber
-import site.iplease.iadserver.global.accept.subscriber.IpAssignDemandAcceptedErrorOnManageMessageSubscriber
+import site.iplease.iadserver.global.error.subscriber.IpAssignDemandAcceptedErrorOnManageMessageSubscriber
 import site.iplease.iadserver.global.confirm.data.message.IpAssignDemandConfirmMessage
 import site.iplease.iadserver.global.confirm.subscriber.IpAssignDemandConfirmSubscriber
 import site.iplease.iadserver.global.error.data.message.IpAssignDemandCancelErrorOnStatusMessage
