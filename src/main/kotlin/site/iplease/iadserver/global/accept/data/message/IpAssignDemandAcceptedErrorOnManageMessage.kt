@@ -13,5 +13,6 @@ data class IpAssignDemandAcceptedErrorOnManageMessage(
     val description: String,
     val usage: AssignIpUsageType,
     val expireAt: LocalDate,
+    val assignIp: String,
     val message: String
 )

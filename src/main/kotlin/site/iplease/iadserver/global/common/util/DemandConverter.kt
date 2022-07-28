@@ -10,6 +10,7 @@ import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCancelMessage
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.global.confirm.data.message.IpAssignDemandConfirmMessage
+import site.iplease.iadserver.global.error.data.dto.DemandAcceptedErrorOnManageDto
 
 interface DemandConverter {
     fun toDto(demandId: Long): Mono<DemandDto>
@@ -18,6 +19,7 @@ interface DemandConverter {
     fun toDto(message: IpAssignDemandConfirmMessage): Mono<DemandDto>
     fun toEntity(dto: DemandDto): Mono<Demand>
     fun toEntity(dto: DemandCancelErrorOnStatusDto): Mono<Demand>
+    fun toEntity(demand: DemandAcceptedErrorOnManageDto): Mono<Demand>
     fun toIpAssignDemandCreateMessage(demand: DemandDto): Mono<IpAssignDemandCreateMessage>
     fun toIpAssignDemandCancelMessage(demand: DemandDto): Mono<IpAssignDemandCancelMessage>
     fun toAssignIpCreateMessage(demand: DemandDto, message: IpAssignDemandAcceptMessage): Mono<IpAssignDemandAcceptedMessage>
