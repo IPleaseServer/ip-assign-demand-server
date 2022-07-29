@@ -40,16 +40,16 @@ class DemandQueryServiceImplTest {
         //given
         val demandId = Random.nextLong()
         val entity = mock<Demand>()
-        val dto = mock<DemandDto>()
+        val expectedResult = mock<DemandDto>()
 
         //when
         whenever(demandRepository.existsByIdentifier(demandId)).thenReturn(true.toMono())
         whenever(demandRepository.findByIdentifier(demandId)).thenReturn(entity.toMono())
-        whenever(demandConverter.toDto(entity)).thenReturn(dto.toMono())
+        whenever(demandConverter.toDto(entity)).thenReturn(expectedResult.toMono())
 
         val result = target.getDemandById(demandId).block()!!
 
         //then
-        assertTrue(result == dto)
+        assertTrue(result == expectedResult)
     }
 }
