@@ -3,7 +3,7 @@ package site.iplease.iadserver.domain.common.util
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.global.error.data.dto.DemandCancelErrorOnStatusDto
+import site.iplease.iadserver.global.cancel.data.dto.DemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.domain.common.data.request.AssignIpDemandRequest
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMessage
@@ -14,7 +14,7 @@ import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCancelMessage
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.global.confirm.data.message.IpAssignDemandConfirmMessage
-import site.iplease.iadserver.global.error.data.dto.DemandAcceptedErrorOnManageDto
+import site.iplease.iadserver.global.accept.data.dto.DemandAcceptedErrorOnManageDto
 import java.time.LocalDate
 
 @Component
