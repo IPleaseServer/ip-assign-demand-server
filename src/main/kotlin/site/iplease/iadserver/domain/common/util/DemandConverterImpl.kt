@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.global.cancel.data.dto.DemandCancelErrorOnStatusDto
 import site.iplease.iadserver.domain.common.data.entity.Demand
-import site.iplease.iadserver.domain.common.data.request.AssignIpDemandRequest
+import site.iplease.iadserver.domain.common.data.request.CreateAssignIpDemandRequest
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMessage
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedMessage
 import site.iplease.iadserver.global.common.data.type.AssignIpUsageType
@@ -19,7 +19,7 @@ import java.time.LocalDate
 
 @Component
 class DemandConverterImpl: DemandConverter {
-    override fun toDto(accountId: Long, request: AssignIpDemandRequest): Mono<DemandDto>  =
+    override fun toDto(accountId: Long, request: CreateAssignIpDemandRequest): Mono<DemandDto>  =
         Unit.toMono().map { DemandDto(
             issuerId = accountId,
             title = request.title,
