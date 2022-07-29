@@ -2,12 +2,12 @@ package site.iplease.iadserver.domain.common.controller
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.common.data.request.CreateAssignIpDemandRequest
 import site.iplease.iadserver.domain.common.data.request.CancelAssignIpDemandRequest
@@ -31,10 +31,10 @@ class IpAssignDemandControllerTest {
 
     @BeforeEach
     fun beforeEach() {
-        ipAssignDemandService = mock(IpAssignDemandService::class.java)
-        messagePublishService = mock(MessagePublishService::class.java)
-        demandConverter = mock(DemandConverter::class.java)
-        demandPolicyValidator = mock(DemandPolicyValidator::class.java)
+        ipAssignDemandService = mock()
+        messagePublishService = mock()
+        demandConverter = mock()
+        demandPolicyValidator = mock()
         target = IpAssignDemandController(ipAssignDemandService, messagePublishService, demandConverter, demandPolicyValidator)
     }
     
@@ -56,9 +56,9 @@ class IpAssignDemandControllerTest {
 
         //given
         val issuerId = Random.nextLong()
-        val request = mock(CreateAssignIpDemandRequest::class.java)
-        val dto = mock(DemandDto::class.java)
-        val message = mock(IpAssignDemandCreateMessage::class.java)
+        val request = mock<CreateAssignIpDemandRequest>()
+        val dto = mock<DemandDto>()
+        val message = mock<IpAssignDemandCreateMessage>()
 
         //when
         whenever(demandConverter.toDto(issuerId, request)).thenReturn(dto.toMono())
@@ -92,8 +92,8 @@ class IpAssignDemandControllerTest {
         val issuerId = Random.nextLong()
         val demandId = Random.nextLong()
         val request = CancelAssignIpDemandRequest(demandId)
-        val dto = mock(DemandDto::class.java)
-        val message = mock(IpAssignDemandCancelMessage::class.java)
+        val dto = mock<DemandDto>()
+        val message = mock<IpAssignDemandCancelMessage>()
 
         //when
         whenever(demandPolicyValidator.validate(any(), eq(DemandPolicyType.DEMAND_CANCEL))).thenReturn(dto.toMono())
