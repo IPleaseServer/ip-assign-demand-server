@@ -9,7 +9,7 @@ import site.iplease.iadserver.global.cancel.data.message.IpAssignDemandCancelErr
 @Component
 class DemandCancelErrorOnStatusConverterImpl: DemandCancelErrorOnStatusConverter {
     override fun convert(message: IpAssignDemandCancelErrorOnStatusMessage): Mono<DemandCancelErrorOnStatusDto> =
-        message.toMono().map { DemandCancelErrorOnStatusDto( //TODO Unit.toMono().map 으로 바꾸기
+        Unit.toMono().map { DemandCancelErrorOnStatusDto(
             demandId =  message.id,
             issuerId =  message.issuerId,
             title =  message.title,
