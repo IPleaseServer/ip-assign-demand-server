@@ -1,4 +1,4 @@
-package site.iplease.iadserver.domain.error.data.dto
+package site.iplease.iadserver.global.error.data.dto
 
 //IpAssignDemandCreate SequenceDiagram 참조
 data class DemandCreateErrorOnStatusDto (
