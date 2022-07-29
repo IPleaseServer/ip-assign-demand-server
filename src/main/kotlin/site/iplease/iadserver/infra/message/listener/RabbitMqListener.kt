@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMessage
+import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedErrorOnManageMessage
 import site.iplease.iadserver.global.accept.subscriber.IpAssignDemandAcceptSubscriber
+import site.iplease.iadserver.global.error.subscriber.IpAssignDemandAcceptedErrorOnManageMessageSubscriber
 import site.iplease.iadserver.global.confirm.data.message.IpAssignDemandConfirmMessage
 import site.iplease.iadserver.global.confirm.subscriber.IpAssignDemandConfirmSubscriber
 import site.iplease.iadserver.global.error.data.message.IpAssignDemandCancelErrorOnStatusMessage
@@ -23,6 +25,7 @@ import site.iplease.iadserver.infra.message.type.MessageType
 class RabbitMqListener(
     private val ipAssignDemandCreateErrorOnStatusSubscriber: IpAssignDemandCreateErrorOnStatusSubscriber,
     private val ipAssignDemandCancelErrorOnStatusSubscriber: IpAssignDemandCancelErrorOnStatusSubscriber,
+    private val ipAssignDemandAcceptedErrorOnManageMessageSubscriber: IpAssignDemandAcceptedErrorOnManageMessageSubscriber,
     private val ipAssignDemandConfirmSubscriber: IpAssignDemandConfirmSubscriber,
     private val ipAssignDemandRejectSubscriber: IpAssignDemandRejectSubscriber,
     private val ipAssignDemandAcceptSubscriber: IpAssignDemandAcceptSubscriber,
@@ -61,6 +64,9 @@ class RabbitMqListener(
             MessageType.IP_ASSIGN_DEMAND_CANCEL_ERROR_ON_STATUS -> objectMapper.toMono()
                 .map { it.readValue(payload, IpAssignDemandCancelErrorOnStatusMessage::class.java) }
                 .map { message -> ipAssignDemandCancelErrorOnStatusSubscriber.subscribe(message) }
+            MessageType.IP_ASSIGN_DEMAND_ACCEPTED_ERROR_ON_MANAGE -> objectMapper.toMono()
+                .map { it.readValue(payload, IpAssignDemandAcceptedErrorOnManageMessage::class.java) }
+                .map { message -> ipAssignDemandAcceptedErrorOnManageMessageSubscriber.subscribe(message) }
             else -> {
                 logger.warn("처리대상이 아닌 메세지가 바인딩되어있습니다!")
                 logger.warn("routingKey: ${type.routingKey}")
