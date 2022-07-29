@@ -1,10 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    jacoco
     id("org.springframework.boot") version "2.7.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
+}
+
+jacoco {
+    toolVersion = "0.8.8"
 }
 
 group = "site.iplease"
@@ -58,6 +63,8 @@ dependencies {
     //test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation ("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation ("org.mockito:mockito-inline:2.21.0")
 }
 
 dependencyManagement {
