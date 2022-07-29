@@ -9,9 +9,11 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import reactor.kotlin.core.publisher.toMono
+import site.iplease.iadserver.domain.common.data.request.CreateAssignIpDemandRequest
 import site.iplease.iadserver.domain.common.data.request.CancelAssignIpDemandRequest
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCancelMessage
+import site.iplease.iadserver.global.common.data.message.IpAssignDemandCreateMessage
 import site.iplease.iadserver.global.common.data.type.DemandPolicyType
 import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.common.util.DemandConverter
@@ -34,6 +36,41 @@ class IpAssignDemandControllerTest {
         demandConverter = mock(DemandConverter::class.java)
         demandPolicyValidator = mock(DemandPolicyValidator::class.java)
         target = IpAssignDemandController(ipAssignDemandService, messagePublishService, demandConverter, demandPolicyValidator)
+    }
+    
+    //createAssignIpDemand 로직
+    //예약정보를 추출한다. -> demandConverter
+    //에약정보를 검증한다. -> demandPolicyValidator
+    //예약추가 트랜잭션을 수행한다. -> ipAssignDemandService
+    //예약추가됨 메세지를 구성한다. -> demandConverter
+    //예약추가됨 메세지를 발행한다. -> messagePublishService
+    //반환값을 ResponseEntity로 감싸 반환한다.
+
+    @Test @DisplayName("IP할당예약추가 성공 테스트")
+    fun testCreateAssignIpDemandSuccess() {
+        //예약추가에 성공하였다면, 200 OK를 반환한다.
+        //예약추가가 성공하려면 아래의 작업이 성공해야한다.
+        //- 예약추가 정책 검증
+        //- 예약추가 트랜잭션 수행
+        //- 예약추가됨 메세지 발행
+
+        //given
+        val issuerId = Random.nextLong()
+        val request = mock(CreateAssignIpDemandRequest::class.java)
+        val dto = mock(DemandDto::class.java)
+        val message = mock(IpAssignDemandCreateMessage::class.java)
+
+        //when
+        whenever(demandConverter.toDto(issuerId, request)).thenReturn(dto.toMono())
+        whenever(demandPolicyValidator.validate(dto, DemandPolicyType.DEMAND_CREATE)).thenReturn(dto.toMono())
+        whenever(ipAssignDemandService.addDemand(dto)).thenReturn(dto.toMono()).thenReturn(dto.toMono())
+        whenever(demandConverter.toIpAssignDemandCreateMessage(dto)).thenReturn(message.toMono())
+        whenever(messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_CREATE, message)).thenReturn(Unit.toMono())
+
+        val result = target.createAssignIpDemand(issuerId, request).block()!!
+
+        //then
+        assertTrue(result.statusCode.is2xxSuccessful)
     }
 
     //cancelAssignIpDemand 로직
