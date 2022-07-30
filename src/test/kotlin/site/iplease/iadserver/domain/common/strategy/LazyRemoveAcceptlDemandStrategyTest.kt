@@ -38,8 +38,8 @@ class LazyRemoveAcceptlDemandStrategyTest {
     //acceptDemand 로직
     //예약정보를 추출한다. (byId)
     //예약정보를 검증한다.
-    //예약 엔티티를 조회한다. (byEntity)
-    //예약정보를 추출한다.
+    //예약 엔티티를 조회한다.
+    //예약정보를 추출한다. (byEntity)
     //수락된 예약 엔티티를 추출한다.
     //수락된 예약 엔티티를 추가한다.
     //예약정보를 반환한다.
