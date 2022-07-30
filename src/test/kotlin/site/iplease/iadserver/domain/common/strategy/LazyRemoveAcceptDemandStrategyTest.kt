@@ -19,7 +19,7 @@ import site.iplease.iadserver.global.common.util.DemandConverter
 import site.iplease.iadserver.global.common.util.DemandPolicyValidator
 import kotlin.random.Random
 
-class LazyRemoveAcceptlDemandStrategyTest {
+class LazyRemoveAcceptDemandStrategyTest {
     private lateinit var demandRepository: DemandRepository
     private lateinit var demandConverter: DemandConverter
     private lateinit var acceptedDemandRepository: AcceptedDemandRepository
