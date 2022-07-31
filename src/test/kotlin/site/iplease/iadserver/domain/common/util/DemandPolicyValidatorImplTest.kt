@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.DemandTestUtil
+import DemandTestUtil
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.type.AssignIpUsageType
 import site.iplease.iadserver.global.common.data.type.DemandPolicyType

@@ -1,5 +1,3 @@
-package site.iplease.iadserver
-
 import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 
