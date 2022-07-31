@@ -43,7 +43,7 @@ class IpAssignDemandAcceptSubscriberV1Test {
     @Test @DisplayName("IP할당신청수락 성공 테스트")
     fun testSubscribeSuccess() {
         //신청수락에 성공하였다면, 할당IP추가 메세지를 발행한다.
-        //신청수락이 성공하려 아래의 작업이 성공해야한다.
+        //신청수락이 성공하려면 아래의 작업이 성공해야한다.
         //- 신청수락 정책 검증
         //- 신청수락 트랜잭션 수행
 
