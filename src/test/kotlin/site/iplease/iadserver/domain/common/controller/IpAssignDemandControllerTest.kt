@@ -40,7 +40,7 @@ class IpAssignDemandControllerTest {
     
     //createAssignIpDemand 로직
     //신청정보를 추출한다. -> demandConverter
-    //에약정보를 검증한다. -> demandPolicyValidator
+    //신청정보를 검증한다. -> demandPolicyValidator
     //신청추가 트랜잭션을 수행한다. -> ipAssignDemandService
     //신청추가됨 메세지를 구성한다. -> demandConverter
     //신청추가됨 메세지를 발행한다. -> messagePublishService
