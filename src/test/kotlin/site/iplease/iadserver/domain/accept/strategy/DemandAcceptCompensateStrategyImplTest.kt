@@ -1,7 +1,10 @@
 package site.iplease.iadserver.domain.accept.strategy
 
 import TestDummyDataUtil
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -10,14 +13,12 @@ import site.iplease.iadserver.domain.accept.repository.AcceptedDemandRepository
 import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.global.accept.data.dto.DemandAcceptedErrorOnManageDto
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptErrorOnDemandMessage
-import site.iplease.iadserver.global.common.data.type.DemandStatusType
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.repository.DemandSaver
 import site.iplease.iadserver.global.common.util.DateUtil
 import site.iplease.iadserver.global.common.util.DemandConverter
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
-import kotlin.random.Random
 
 class DemandAcceptCompensateStrategyImplTest {
     private lateinit var demandRepository: DemandRepository
@@ -54,11 +55,12 @@ class DemandAcceptCompensateStrategyImplTest {
         //- 신청수락 취소 트랜잭션 수행 (수락된신청 엔티티 삭제)
 
         //given
-        val demandId = Random.nextLong()
-        val demandIssuerId = Random.nextLong()
-        val assignIp = listOf("127.0.0.1", "192.168.12.4", "10.28.87.61", "142.250.206.196").random()
-        val originStatus = DemandStatusType.values().random()
-        val message = listOf("오류메세지", "오류메세지일지도", "오류메세지일거야").random()
+        val demandId = TestDummyDataUtil.id()
+        val demandIssuerId = TestDummyDataUtil.id()
+        val assignIp = TestDummyDataUtil.assignIp()
+        val originStatus = TestDummyDataUtil.demandStatus()
+        val message = TestDummyDataUtil.errorMessage()
+
         val dto = mock<DemandAcceptedErrorOnManageDto>()
         val entity = mock<Demand>()
         val savedEntity = mock<Demand>()
@@ -80,7 +82,7 @@ class DemandAcceptCompensateStrategyImplTest {
         whenever(messagePublishService.publish(MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND, errorMessage)).thenReturn(Unit.toMono())
 
 
-        val result = target.compensate(dto).block()!!
+        target.compensate(dto).block()!!
 
         //then
         verify(demandSaver, times(1)).saveDemand(entity, demandId)

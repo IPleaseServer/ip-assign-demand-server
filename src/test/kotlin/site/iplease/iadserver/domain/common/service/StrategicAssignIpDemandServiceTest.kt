@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.service
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,7 +13,6 @@ import site.iplease.iadserver.domain.common.strategy.AddDemandStrategy
 import site.iplease.iadserver.domain.common.strategy.CancelDemandStrategy
 import site.iplease.iadserver.domain.common.strategy.RejectDemandStrategy
 import site.iplease.iadserver.global.common.data.dto.DemandDto
-import kotlin.random.Random
 
 class StrategicAssignIpDemandServiceTest {
     private lateinit var addDemandStrategy: AddDemandStrategy
@@ -60,7 +60,7 @@ class StrategicAssignIpDemandServiceTest {
         //- 예약취소 트랜잭션 수행
 
         //given
-        val demandId = Random.nextLong()
+        val demandId = TestDummyDataUtil.id()
         val expectedResult = mock<DemandDto>()
 
         //when
@@ -81,8 +81,8 @@ class StrategicAssignIpDemandServiceTest {
         //- 예약거절 트랜잭션 수행
 
         //given
-        val demandId = Random.nextLong()
-        val reason = listOf("the day was sunny", "날이 좋지 않아서", "날이 적당해서").random()
+        val demandId = TestDummyDataUtil.id()
+        val reason = TestDummyDataUtil.reason()
         val expectedResult = mock<DemandDto>()
 
         //when
@@ -103,8 +103,8 @@ class StrategicAssignIpDemandServiceTest {
         //- 예약수락 트랜잭션 수행
 
         //given
-        val demandId = Random.nextLong()
-        val assignIp = listOf("127.0.0.1", "192.168.0.12", "10.120.73.1").random()
+        val demandId = TestDummyDataUtil.id()
+        val assignIp = TestDummyDataUtil.assignIp()
         val expectedResult = mock<DemandDto>()
 
         //when

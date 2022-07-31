@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.service
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -11,7 +12,6 @@ import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DemandConverter
-import kotlin.random.Random
 
 class DemandQueryServiceImplTest {
     private lateinit var demandRepository: DemandRepository
@@ -38,7 +38,7 @@ class DemandQueryServiceImplTest {
         //- 예약조회 트랜잭션 수행
 
         //given
-        val demandId = Random.nextLong()
+        val demandId = TestDummyDataUtil.id()
         val entity = mock<Demand>()
         val expectedResult = mock<DemandDto>()
 

@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.strategy
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -13,7 +14,6 @@ import site.iplease.iadserver.domain.common.data.entity.Demand
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DemandConverter
-import kotlin.random.Random
 
 class CancelDemandStrategyImplTest {
     private lateinit var demandRepository: DemandRepository
@@ -40,7 +40,7 @@ class CancelDemandStrategyImplTest {
         //- 예약취소 트랜잭션 수행 (예약정보 제거)
 
         //given
-        val demandId = Random.nextLong()
+        val demandId = TestDummyDataUtil.id()
         val entity = mock<Demand>()
         val dto = mock<DemandDto>()
 

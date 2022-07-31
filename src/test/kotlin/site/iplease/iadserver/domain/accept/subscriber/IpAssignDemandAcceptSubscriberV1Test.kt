@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.accept.subscriber
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -9,12 +10,10 @@ import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptMes
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedMessage
 import site.iplease.iadserver.global.accept.util.AssignIpValidator
 import site.iplease.iadserver.global.common.data.dto.DemandDto
-import site.iplease.iadserver.global.common.data.type.DemandStatusType
 import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.common.util.DemandConverter
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
-import kotlin.random.Random
 
 class IpAssignDemandAcceptSubscriberV1Test {
     private lateinit var demandService: IpAssignDemandService
@@ -48,10 +47,10 @@ class IpAssignDemandAcceptSubscriberV1Test {
         //- 신청수락 트랜잭션 수행
 
         //given
-        val issuerId = Random.nextLong()
-        val demandId = Random.nextLong()
-        val assignIp = listOf("127.0.0.1", "192.168.12.4", "10.28.87.61", "142.250.206.196").random()
-        val originStatus = DemandStatusType.values().random()
+        val issuerId = TestDummyDataUtil.id()
+        val demandId = TestDummyDataUtil.id()
+        val assignIp = TestDummyDataUtil.assignIp()
+        val originStatus = TestDummyDataUtil.demandStatus()
         val acceptMessage = IpAssignDemandAcceptMessage(issuerId, demandId, assignIp, originStatus)
         val acceptedMessage = mock<IpAssignDemandAcceptedMessage>()
         val dto = mock<DemandDto>()

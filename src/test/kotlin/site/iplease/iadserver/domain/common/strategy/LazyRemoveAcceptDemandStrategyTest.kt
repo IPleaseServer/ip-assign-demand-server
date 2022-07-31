@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.strategy
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -17,7 +18,6 @@ import site.iplease.iadserver.global.common.data.type.DemandPolicyType
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DemandConverter
 import site.iplease.iadserver.global.common.util.DemandPolicyValidator
-import kotlin.random.Random
 
 class LazyRemoveAcceptDemandStrategyTest {
     private lateinit var demandRepository: DemandRepository
@@ -51,10 +51,10 @@ class LazyRemoveAcceptDemandStrategyTest {
         //- 예약수락 트랜잭션 수행 (수락된 예약 추가)
 
         //given
-        val demandId = Random.nextLong()
+        val demandId = TestDummyDataUtil.id()
         val dto = mock<DemandDto>()
         val entity = mock<Demand>()
-        val assignIp = listOf("127.0.0.1", "10.120.74.32", "192.168.8.175").random()
+        val assignIp = TestDummyDataUtil.assignIp()
         val acceptedDemand = AcceptedDemand(demandId, assignIp)
         val expectedResult = mock<DemandDto>()
 

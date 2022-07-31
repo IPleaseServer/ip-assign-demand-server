@@ -13,9 +13,6 @@ import site.iplease.iadserver.domain.accept.strategy.DemandAcceptCompensateStrat
 import site.iplease.iadserver.domain.accept.util.DemandAcceptedErrorOnManageConverter
 import site.iplease.iadserver.global.accept.data.dto.DemandAcceptedErrorOnManageDto
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptedErrorOnManageMessage
-import site.iplease.iadserver.global.common.data.type.AssignIpUsageType
-import site.iplease.iadserver.global.common.data.type.DemandStatusType
-import kotlin.random.Random
 
 class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1Test {
     private lateinit var demandAcceptedErrorOnManageConverter: DemandAcceptedErrorOnManageConverter
@@ -39,16 +36,16 @@ class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1Test {
         //- 신청수락 보상트랜잭션 수행
 
         //given
-        val demandId = Random.nextLong()
-        val originStatus = DemandStatusType.values().random()
-        val issuerId = Random.nextLong()
-        val demandIssuerId = Random.nextLong()
-        val title = listOf("제목", "제목일지도", "제목일거야").random()
-        val description = listOf("설명", "설명일지도", "설명일거야").random()
-        val usage = AssignIpUsageType.values().random()
+        val demandId = TestDummyDataUtil.id()
+        val originStatus = TestDummyDataUtil.demandStatus()
+        val issuerId = TestDummyDataUtil.id()
+        val demandIssuerId = TestDummyDataUtil.id()
+        val title = TestDummyDataUtil.title()
+        val description = TestDummyDataUtil.description()
+        val usage = TestDummyDataUtil.usage()
         val expireAt = TestDummyDataUtil.randomDate()
-        val assignIp = listOf("127.0.0.1", "192.168.12.4", "10.28.87.61", "142.250.206.196").random()
-        val message = listOf("오류메세지", "오류메세지일지도", "오류메세지일거야").random()
+        val assignIp = TestDummyDataUtil.assignIp()
+        val message = TestDummyDataUtil.errorMessage()
 
         val errorMessage = IpAssignDemandAcceptedErrorOnManageMessage(demandId, originStatus, issuerId, demandIssuerId, title, description, usage, expireAt, assignIp, message)
         val dto = mock<DemandAcceptedErrorOnManageDto>()

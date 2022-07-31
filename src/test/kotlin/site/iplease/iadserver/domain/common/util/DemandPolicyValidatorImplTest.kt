@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.util
 
+import DemandTestUtil
 import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -10,14 +11,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import reactor.kotlin.core.publisher.toMono
-import DemandTestUtil
 import site.iplease.iadserver.global.common.data.dto.DemandDto
-import site.iplease.iadserver.global.common.data.type.AssignIpUsageType
 import site.iplease.iadserver.global.common.data.type.DemandPolicyType
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DateUtil
 import java.time.LocalDate
-import kotlin.random.Random
 
 class DemandPolicyValidatorImplTest {
     private lateinit var demandRepository: DemandRepository
@@ -31,11 +29,11 @@ class DemandPolicyValidatorImplTest {
         dateUtil = mock()
         target = DemandPolicyValidatorImpl(demandRepository, dateUtil)
 
-        val demandId = Random.nextLong()
-        val issuerId = Random.nextLong()
-        val title = listOf("제목일지도", "제목일거야", "제목").random()
-        val description = listOf("설명일지도", "설명일거야", "설명").random()
-        val usage = AssignIpUsageType.values().random()
+        val demandId = TestDummyDataUtil.id()
+        val issuerId = TestDummyDataUtil.id()
+        val title = TestDummyDataUtil.title()
+        val description = TestDummyDataUtil.description()
+        val usage = TestDummyDataUtil.usage()
         val expireAt = TestDummyDataUtil.randomDate()
         randomDto = DemandDto(demandId, issuerId, title, description, usage, expireAt)
     }

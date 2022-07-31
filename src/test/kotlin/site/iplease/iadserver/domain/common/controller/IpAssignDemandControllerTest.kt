@@ -1,5 +1,6 @@
 package site.iplease.iadserver.domain.common.controller
 
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -9,8 +10,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import reactor.kotlin.core.publisher.toMono
-import site.iplease.iadserver.domain.common.data.request.CreateAssignIpDemandRequest
 import site.iplease.iadserver.domain.common.data.request.CancelAssignIpDemandRequest
+import site.iplease.iadserver.domain.common.data.request.CreateAssignIpDemandRequest
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCancelMessage
 import site.iplease.iadserver.global.common.data.message.IpAssignDemandCreateMessage
@@ -20,7 +21,6 @@ import site.iplease.iadserver.global.common.util.DemandConverter
 import site.iplease.iadserver.global.common.util.DemandPolicyValidator
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
-import kotlin.random.Random
 
 class IpAssignDemandControllerTest {
     private lateinit var ipAssignDemandService: IpAssignDemandService
@@ -55,7 +55,7 @@ class IpAssignDemandControllerTest {
         //- 신청추가됨 메세지 발행
 
         //given
-        val issuerId = Random.nextLong()
+        val issuerId = TestDummyDataUtil.id()
         val request = mock<CreateAssignIpDemandRequest>()
         val dto = mock<DemandDto>()
         val message = mock<IpAssignDemandCreateMessage>()
@@ -89,8 +89,8 @@ class IpAssignDemandControllerTest {
         //- 신청취소됨 메세지 발행
 
         //given
-        val issuerId = Random.nextLong()
-        val demandId = Random.nextLong()
+        val issuerId = TestDummyDataUtil.id()
+        val demandId = TestDummyDataUtil.id()
         val request = CancelAssignIpDemandRequest(demandId)
         val dto = mock<DemandDto>()
         val message = mock<IpAssignDemandCancelMessage>()
