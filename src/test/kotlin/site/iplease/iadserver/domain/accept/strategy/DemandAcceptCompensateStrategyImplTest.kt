@@ -1,6 +1,6 @@
 package site.iplease.iadserver.domain.accept.strategy
 
-import TestUtil
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -63,7 +63,7 @@ class DemandAcceptCompensateStrategyImplTest {
         val entity = mock<Demand>()
         val savedEntity = mock<Demand>()
         val errorMessage = IpAssignDemandAcceptErrorOnDemandMessage(demandIssuerId, demandId, assignIp, originStatus, message)
-        val loggingDate = TestUtil.randomDate()
+        val loggingDate = TestDummyDataUtil.randomDate()
 
         //when
         whenever(dto.demandId).thenReturn(demandId)

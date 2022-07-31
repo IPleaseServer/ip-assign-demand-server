@@ -1,6 +1,6 @@
 package site.iplease.iadserver.domain.common.util
 
-import TestUtil
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -36,7 +36,7 @@ class DemandPolicyValidatorImplTest {
         val title = listOf("제목일지도", "제목일거야", "제목").random()
         val description = listOf("설명일지도", "설명일거야", "설명").random()
         val usage = AssignIpUsageType.values().random()
-        val expireAt = TestUtil.randomDate()
+        val expireAt = TestDummyDataUtil.randomDate()
         randomDto = DemandDto(demandId, issuerId, title, description, usage, expireAt)
     }
 

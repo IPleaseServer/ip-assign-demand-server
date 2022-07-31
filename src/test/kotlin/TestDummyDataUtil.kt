@@ -1,7 +1,7 @@
 import java.time.LocalDate
 import kotlin.random.Random
 
-object TestUtil {
+object TestDummyDataUtil {
     fun randomDate(): LocalDate {
         val minDay = LocalDate.MIN.toEpochDay()
         val maxDay = LocalDate.MAX.toEpochDay()

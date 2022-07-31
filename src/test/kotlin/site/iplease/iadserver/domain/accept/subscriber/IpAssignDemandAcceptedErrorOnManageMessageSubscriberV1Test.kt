@@ -1,6 +1,6 @@
 package site.iplease.iadserver.domain.accept.subscriber
 
-import TestUtil
+import TestDummyDataUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -46,7 +46,7 @@ class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1Test {
         val title = listOf("제목", "제목일지도", "제목일거야").random()
         val description = listOf("설명", "설명일지도", "설명일거야").random()
         val usage = AssignIpUsageType.values().random()
-        val expireAt = TestUtil.randomDate()
+        val expireAt = TestDummyDataUtil.randomDate()
         val assignIp = listOf("127.0.0.1", "192.168.12.4", "10.28.87.61", "142.250.206.196").random()
         val message = listOf("오류메세지", "오류메세지일지도", "오류메세지일거야").random()
 
