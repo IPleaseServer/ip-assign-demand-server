@@ -7,5 +7,5 @@ import site.iplease.iadserver.domain.accept.strategy.RemoveAcceptedDemandStrateg
 @Component
 class AcceptedDemandScheduler(private val removeAcceptedDemandStrategy: RemoveAcceptedDemandStrategy) {
     @Scheduled(cron = "0 0 3 ? * SAT")
-    fun removeRejectedDemand() = removeAcceptedDemandStrategy.removeAcceptedDemand()
+    fun removeAcceptedDemand() = removeAcceptedDemandStrategy.removeAcceptedDemand()
 }
