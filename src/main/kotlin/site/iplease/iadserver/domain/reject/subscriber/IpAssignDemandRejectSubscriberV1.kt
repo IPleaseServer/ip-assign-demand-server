@@ -7,7 +7,7 @@ import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.reject.exception.IpAssignDemandRejectFailureException
 import site.iplease.iadserver.global.common.data.dto.DemandDto
 import site.iplease.iadserver.global.common.service.IpAssignDemandService
-import site.iplease.iadserver.global.error.data.message.IpAssignDemandRejectErrorOnDemandMessage
+import site.iplease.iadserver.global.reject.data.message.IpAssignDemandRejectErrorOnDemandMessage
 import site.iplease.iadserver.global.reject.data.message.IpAssignDemandRejectMessage
 import site.iplease.iadserver.global.reject.subscriber.IpAssignDemandRejectSubscriber
 import site.iplease.iadserver.infra.alarm.data.type.AlarmType

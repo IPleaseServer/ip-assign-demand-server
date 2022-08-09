@@ -15,7 +15,7 @@ class RemoveAcceptedDemandStrategyImpl(
     private val logger = LoggerFactory.getLogger(this::class.java)
     override fun removeAcceptedDemand() {
         Unit.toMono()
-            .map { logger.info("거절된 예약에 대한 일괄삭제작업을 진행합니다!") }.toFlux()
+            .map { logger.info("수락된 예약에 대한 일괄삭제작업을 진행합니다!") }.toFlux()
             .flatMap { acceptedDemandRepository.selectAll() }
             .flatMap { acceptedDemand -> demandRepository.deleteByIdentifier(acceptedDemand.demandId).then(acceptedDemand.toMono()) }
             .flatMap { acceptedDemand ->  acceptedDemandRepository.delete(acceptedDemand.demandId).then(acceptedDemand.toMono()) }
