@@ -13,7 +13,7 @@ jacoco {
 }
 
 group = "site.iplease"
-version = "1.5.2-RELEASE"
+version = "1.6.0-RELEASE"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {
