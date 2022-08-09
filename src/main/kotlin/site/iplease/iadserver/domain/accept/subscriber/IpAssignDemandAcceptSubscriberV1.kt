@@ -8,7 +8,7 @@ import site.iplease.iadserver.global.accept.subscriber.IpAssignDemandAcceptSubsc
 import site.iplease.iadserver.global.accept.util.AssignIpValidator
 import site.iplease.iadserver.global.common.service.IpAssignDemandService
 import site.iplease.iadserver.global.common.util.DemandConverter
-import site.iplease.iadserver.global.error.data.message.IpAssignDemandAcceptErrorOnDemandMessage
+import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptErrorOnDemandMessage
 import site.iplease.iadserver.infra.message.service.MessagePublishService
 import site.iplease.iadserver.infra.message.type.MessageType
 
