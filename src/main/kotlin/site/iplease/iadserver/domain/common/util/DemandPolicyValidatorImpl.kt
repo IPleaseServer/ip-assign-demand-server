@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.common.exception.*
 import site.iplease.iadserver.global.common.data.type.DemandPolicyType
-import site.iplease.iadserver.global.common.exception.DemandNotExistException
+import site.iplease.iadserver.global.common.exception.UnknownDemandException
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.util.DateUtil
 import site.iplease.iadserver.global.common.util.DemandPolicyValidator
@@ -32,7 +32,7 @@ class DemandPolicyValidatorImpl(
         demandRepository.existsByIdentifier(demandId)
             .flatMap { isExist ->
                 if(isExist == beExists) Unit.toMono()
-                else if (beExists) Mono.error(DemandNotExistException("해당 ID를 가진 신청정보를 찾을 수 없습니다! - $demandId"))
+                else if (beExists) Mono.error(UnknownDemandException("해당 ID를 가진 신청정보를 찾을 수 없습니다! - $demandId"))
                 else Mono.error(DemandAlreadyExistsException("이미 해당 ID를 가진 신청정보가 존재합니다! - $demandId"))
             }
 
