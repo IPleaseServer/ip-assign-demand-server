@@ -1,7 +1,6 @@
 package site.iplease.iadserver.domain.reject.subscriber
 
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.reject.exception.IpAssignDemandRejectFailureException
@@ -34,15 +33,19 @@ class IpAssignDemandRejectSubscriberV1(
     }
 
     private fun sendStudentAlarm(demand: DemandDto, message: IpAssignDemandRejectMessage) =
-        Flux.merge(
-        pushAlarmService.publish(demand.issuerId, "IP할당 신청이 거절됬어요!", """
-            IP할당신청이 거절됬어요 어떤 할당신청인지 알아볼까요?
-
-            거절된 신청 제목: ${demand.title}
-            거절된 신청 설명: ${demand.description}
-            거절한 관리자: 
-            거절사유: ${message.reason}
-            """.trimIndent(), AlarmType.EMAIL)//학생에게 신청거절됨 알림을 보낸다.
-            .flatMap { pushAlarmService.publish(demand.issuerId, "IP할당 신청이 거절됬어요!", "자세한 내용은 이메일을 통해 확인해주세요.") }
-        ).then(demand.toMono())
+        pushAlarmService.publish(demand.issuerId, "IP할당 신청이 거절됬어요!", "자세한 내용은 이메일을 통해 확인해주세요.")
+            .flatMap {
+                pushAlarmService.publish(demand.issuerId, "IP할당 신청이 거절됬어요!", """
+                    IP할당신청이 거절됬어요 어떤 할당신청인지 알아볼까요?
+        
+                    > 거절된 신청 제목: ${demand.title}
+                    > 
+                    > 거절된 신청 설명: ${demand.description}
+                    > 
+                    > 거절한 관리자: 
+                    > 
+                    > 거절사유: ${message.reason}
+                    """.trimIndent(), AlarmType.EMAIL
+                )//학생에게 신청거절됨 알림을 보낸다.
+            }.then(demand.toMono())
 }
