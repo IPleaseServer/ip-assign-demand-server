@@ -25,7 +25,7 @@ class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1(
             .flatMap { demand -> demandAcceptCompensateStrategy.compensate(demand).then(demand.toMono()) }
             .flatMap { demand -> messagePublishService.publish(
                 MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND,
-                IpAssignDemandAcceptErrorOnDemandMessage(demand.demandIssuerId, demand.demandId, demand.assignIp, demand.originStatus, demand.message)
+                IpAssignDemandAcceptErrorOnDemandMessage(demand.issuerId, demand.demandId, demand.assignIp, demand.originStatus, demand.message)
             )}.doOnSuccess { logRollback() }
             .doOnError { logError(it) }
             .onErrorResume { Mono.empty() }
