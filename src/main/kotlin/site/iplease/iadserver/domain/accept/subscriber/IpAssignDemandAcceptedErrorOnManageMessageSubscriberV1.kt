@@ -3,6 +3,7 @@ package site.iplease.iadserver.domain.accept.subscriber
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.accept.strategy.DemandAcceptCompensateStrategy
 import site.iplease.iadserver.domain.accept.util.DemandAcceptedErrorOnManageConverter
 import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptErrorOnDemandMessage
@@ -21,12 +22,11 @@ class IpAssignDemandAcceptedErrorOnManageMessageSubscriberV1(
 
     override fun subscribe(message: IpAssignDemandAcceptedErrorOnManageMessage) {
         demandAcceptedErrorOnManageConverter.convert(message)
-            .flatMap { demand -> demandAcceptCompensateStrategy.compensate(demand).map { demand } }
+            .flatMap { demand -> demandAcceptCompensateStrategy.compensate(demand).then(demand.toMono()) }
             .flatMap { demand -> messagePublishService.publish(
                 MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND,
                 IpAssignDemandAcceptErrorOnDemandMessage(demand.demandIssuerId, demand.demandId, demand.assignIp, demand.originStatus, demand.message)
-            )}
-            .doOnSuccess { logRollback() }
+            )}.doOnSuccess { logRollback() }
             .doOnError { logError(it) }
             .onErrorResume { Mono.empty() }
             .block()
