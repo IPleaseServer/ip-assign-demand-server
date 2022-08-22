@@ -6,13 +6,10 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import site.iplease.iadserver.domain.accept.repository.AcceptedDemandRepository
 import site.iplease.iadserver.global.accept.data.dto.DemandAcceptedErrorOnManageDto
-import site.iplease.iadserver.global.accept.data.message.IpAssignDemandAcceptErrorOnDemandMessage
 import site.iplease.iadserver.global.common.repository.DemandRepository
 import site.iplease.iadserver.global.common.repository.DemandSaver
 import site.iplease.iadserver.global.common.util.DateUtil
 import site.iplease.iadserver.global.common.util.DemandConverter
-import site.iplease.iadserver.infra.message.service.MessagePublishService
-import site.iplease.iadserver.infra.message.type.MessageType
 import kotlin.math.absoluteValue
 import kotlin.random.Random
 
@@ -22,7 +19,6 @@ class DemandAcceptCompensateStrategyImpl(
     private val demandConverter: DemandConverter,
     private val demandSaver: DemandSaver,
     private val acceptedDemandRepository: AcceptedDemandRepository,
-    private val messagePublishService: MessagePublishService,
     private val dateUtil: DateUtil
 ): DemandAcceptCompensateStrategy {
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -38,11 +34,7 @@ class DemandAcceptCompensateStrategyImpl(
             //삭제 대기열에 demandId에 대한 AssignIpDemand가 존재할 경우 이를 제거한다.
             .flatMap { acceptedDemandRepository.delete(demand.demandId) }
             .map { createRandomId() }
-            .flatMap { id -> logErrorOnAccepted(id, demand) }
-            .flatMap { messagePublishService.publish(
-                MessageType.IP_ASSIGN_DEMAND_ACCEPT_ERROR_ON_DEMAND,
-                IpAssignDemandAcceptErrorOnDemandMessage(demand.demandIssuerId, demand.demandId, demand.assignIp, demand.originStatus, demand.message)
-            )}
+            .flatMap { id -> logErrorOnAccepted(id, demand) }.map {  }
 
     private fun logErrorOnAccepted(id: String, demand: DemandAcceptedErrorOnManageDto): Mono<String> =
         logErrorOnStatus(id, "할당IP신청수락중 오류가 발생했습니다!", issuerId = demand.issuerId, demandId = demand.demandId, errorMessage = demand.message)

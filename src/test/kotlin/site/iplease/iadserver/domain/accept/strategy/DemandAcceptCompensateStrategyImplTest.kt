@@ -37,7 +37,13 @@ class DemandAcceptCompensateStrategyImplTest {
         acceptedDemandRepository = mock()
         messagePublishService = mock()
         dateUtil = mock()
-        target = DemandAcceptCompensateStrategyImpl(demandRepository, demandConverter, demandSaver, acceptedDemandRepository, messagePublishService, dateUtil)
+        target = DemandAcceptCompensateStrategyImpl(
+            demandRepository,
+            demandConverter,
+            demandSaver,
+            acceptedDemandRepository,
+            dateUtil
+        )
     }
 
     //compensate 로직
