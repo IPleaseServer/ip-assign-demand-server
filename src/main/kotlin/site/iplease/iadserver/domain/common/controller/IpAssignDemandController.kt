@@ -22,7 +22,7 @@ import java.time.LocalDate
 
 @Validated
 @RestController
-@RequestMapping("/api/v1/demand/assign")
+@RequestMapping("/api/v1/demand/assign/command")
 class IpAssignDemandController(
     private val ipAssignDemandService: IpAssignDemandService,//IP할당 거절기능 추가시 lazyReject로 바꾸어야합니다.
     private val messagePublishService: MessagePublishService,
