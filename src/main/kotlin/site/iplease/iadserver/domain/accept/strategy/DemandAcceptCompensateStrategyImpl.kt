@@ -29,8 +29,8 @@ class DemandAcceptCompensateStrategyImpl(
             .flatMap { isExists ->
                 if(isExists) Mono.error(RuntimeException())
                 else demandConverter.toEntity(demand)
-            }.flatMap { demandSaver.saveDemand(it, demand.demandId) }
-            .onErrorResume { Mono.empty() }
+            }.flatMap { demandSaver.saveDemand(it, demand.demandId) }.map {  }
+            .onErrorResume { Unit.toMono() }
             //삭제 대기열에 demandId에 대한 AssignIpDemand가 존재할 경우 이를 제거한다.
             .flatMap { acceptedDemandRepository.delete(demand.demandId) }
             .map { createRandomId() }
